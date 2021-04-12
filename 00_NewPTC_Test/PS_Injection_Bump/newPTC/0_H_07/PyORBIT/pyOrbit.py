@@ -47,6 +47,7 @@ from orbit.space_charge.sc2p5d import scAccNodes, scLatticeModifications
 from spacecharge import SpaceChargeCalcAnalyticGaussian
 from spacecharge import InterpolatedLineDensityProfile
 
+from lib.mpi_helpers import *
 from lib.output_dictionary import *
 from lib.save_bunch_as_matfile import *
 from lib.suppress_stdout import suppress_STDOUT
@@ -151,10 +152,30 @@ def GetTunesFromPTC():
 	os.system('rm TWISS_PTC_table.OUT')
 	return Qx, Qy
 
+@only_main_rank
+def WriteTunes(fname):
+	print '\n\tWriting tunes.str for MAD-X input on MPI process: ', rank
+	# ~ script_name = '../PS_Lattice/tunes.str'
+	if os.path.exists(fname):  
+			print 'tune file ' + fname + ' already exists. Deleting'
+			os.remove(fname)
+	f= open(fname,"w")
+	f.write('/**********************************************************************************\n')
+	f.write('*                             Tunes for PTC-PyORBIT simulation\n')
+	f.write('***********************************************************************************/\n')
+	f.write('tune_x = 0.' + str(p['tunex'][-2:]) + ';\n')
+	f.write('tune_y = 0.' + str(p['tuney'][-2:]) + ';\n')
+	f.write('lattice_start = ' + str(p['transverse_plane_flag']) + ';     !Choice of wire-scanner for lattice start position\n')
+	if s['InjectionBump']:
+			f.write('Injection_Bump = 1;     !Execute close of injection bump')
+	else:
+			f.write('Injection_Bump = 0;     !Do not execute close of injection bump')
+	f.close()
+	print 'Writing tunes.str for MAD-X input on MPI process: ', rank, ' : COMPLETE'
+	
 # Create folder structure
 #-----------------------------------------------------------------------
 print '\n\t\tmkdir on MPI process: ', rank
-from lib.mpi_helpers import mpi_mkdir_p
 mpi_mkdir_p('Plots')
 mpi_mkdir_p('input')
 mpi_mkdir_p('bunch_output')
@@ -187,29 +208,34 @@ else:
 		sts = pickle.load(fid)
                 
 # Write tunes.str file to set the tune in MAD-X
-#-----------------------------------------------------------------------
-if not rank:
-	print '\n\tWriting tunes.str for MAD-X input on MPI process: ', rank
-	script_name = '../PS_Lattice/tunes.str'
-	if os.path.exists(script_name):  
-			print 'tune file ' + script_name + ' already exists. Deleting'
-			os.remove(script_name)
+# ~ #-----------------------------------------------------------------------
+# ~ if not rank:
+	# ~ print '\n\tWriting tunes.str for MAD-X input on MPI process: ', rank
+	# ~ script_name = '../PS_Lattice/tunes.str'
+	# ~ if os.path.exists(script_name):  
+			# ~ print 'tune file ' + script_name + ' already exists. Deleting'
+			# ~ os.remove(script_name)
 
-	f= open(script_name,"w")
+	# ~ f= open(script_name,"w")
 
-	f.write('/**********************************************************************************\n')
-	f.write('*                             Tunes for PTC-PyORBIT simulation\n')
-	f.write('***********************************************************************************/\n')
-	f.write('tune_x = 0.' + str(p['tunex'][-2:]) + ';\n')
-	f.write('tune_y = 0.' + str(p['tuney'][-2:]) + ';\n')
-	f.write('lattice_start = ' + str(p['transverse_plane_flag']) + ';     !Choice of wire-scanner for lattice start position\n')
-	if s['InjectionBump']:
-			f.write('Injection_Bump = 1;     !Execute close of injection bump')
-	else:
-			f.write('Injection_Bump = 0;     !Do not execute close of injection bump')
-	f.close()
-orbit_mpi.MPI_Barrier(comm)
-print 'Writing tunes.str for MAD-X input on MPI process: ', rank, ' : COMPLETE'
+	# ~ f.write('/**********************************************************************************\n')
+	# ~ f.write('*                             Tunes for PTC-PyORBIT simulation\n')
+	# ~ f.write('***********************************************************************************/\n')
+	# ~ f.write('tune_x = 0.' + str(p['tunex'][-2:]) + ';\n')
+	# ~ f.write('tune_y = 0.' + str(p['tuney'][-2:]) + ';\n')
+	# ~ f.write('lattice_start = ' + str(p['transverse_plane_flag']) + ';     !Choice of wire-scanner for lattice start position\n')
+	# ~ if s['InjectionBump']:
+			# ~ f.write('Injection_Bump = 1;     !Execute close of injection bump')
+	# ~ else:
+			# ~ f.write('Injection_Bump = 0;     !Do not execute close of injection bump')
+	# ~ f.close()
+# ~ print '\n\twrite_tunes orbit_mpi.MPI_Barrier(comm) called on MPI process: ', rank
+# ~ orbit_mpi.MPI_Barrier(comm)
+# ~ print '\n\twrite_tunes orbit_mpi.MPI_Barrier(comm) complete on MPI process: ', rank
+# ~ print 'Writing tunes.str for MAD-X input on MPI process: ', rank, ' : COMPLETE'
+WriteTunes('../PS_Lattice/tunes.str')
+
+exit(1)
                 
 # Generate Lattice (MADX + PTC) - Use MPI to run on only one 'process'
 #-----------------------------------------------------------------------
@@ -231,18 +257,18 @@ from lib.write_ptc_table import write_RFtable
 from simulation_parameters import RFparameters as RF 
 if not rank:
 	if os.path.exists('../PTC-PyORBIT_Tables/'):
-                print '\n\t ../PTC-PyORBIT_Tables/ exists on MPI process: ', rank
+			print '\n\t ../PTC-PyORBIT_Tables/ exists on MPI process: ', rank
 		pass
 	else:
-                print '\n\t creating ../PTC-PyORBIT_Tables/ on MPI process: ', rank
-                os.makedirs('../PTC-PyORBIT_Tables')
+		print '\n\t creating ../PTC-PyORBIT_Tables/ on MPI process: ', rank
+		os.makedirs('../PTC-PyORBIT_Tables')
+
+	print '\n\t write_RFtable on MPI process: ', rank
+	write_RFtable('../PTC-PyORBIT_Tables/RF_table.ptc', *[RF[k] for k in ['harmonic_factors','time','Ekin_GeV','voltage_MV','phase']])
 
 print '\n\trf_table orbit_mpi.MPI_Barrier(comm) called on MPI process: ', rank
 orbit_mpi.MPI_Barrier(comm)
 print '\n\trf_table orbit_mpi.MPI_Barrier(comm) complete on MPI process: ', rank
-
-print '\n\t write_RFtable on MPI process: ', rank
-write_RFtable('../PTC-PyORBIT_Tables/RF_table.ptc', *[RF[k] for k in ['harmonic_factors','time','Ekin_GeV','voltage_MV','phase']])
 
 # Initialize a Teapot-Style PTC lattice
 #-----------------------------------------------------------------------
@@ -519,8 +545,8 @@ print '\n\t\tstart time = ', start_time
 
 for turn in range(sts['turn']+1, sts['turns_max']):
 	if not rank:
-                PTC_Twiss.UpdatePTCTwiss(Lattice, turn)
-                last_time = time.time()
+		PTC_Twiss.UpdatePTCTwiss(Lattice, turn)
+		last_time = time.time()
 
 	Lattice.trackBunch(bunch, paramsDict)
 	bunchtwissanalysis.analyzeBunch(bunch)  # analyze twiss and emittance
