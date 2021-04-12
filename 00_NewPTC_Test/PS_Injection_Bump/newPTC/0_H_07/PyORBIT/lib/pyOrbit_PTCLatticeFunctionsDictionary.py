@@ -18,13 +18,14 @@ import numpy as np
 class PTCLatticeFunctionsDictionary(object):
 	
 	def __init__(self, PTCLatticeFunctionsDictionary = None):
+		rank = orbit_mpi.MPI_Comm_rank(orbit_mpi.mpi_comm.MPI_COMM_WORLD)
 		if PTCLatticeFunctionsDictionary:
 			print "PTCLatticeFunctionsDictionary::__init__: constructor with existing dictionary not yet implemented"
 		else:
 			self.twiss_dict = {}		# Top level dictionary : N : All data
 			self.turn_list = [] 		# Record indices of stored turns
 
-			print 'PTCLatticeFunctionsDictionary: Created initial twiss dictionary \'twiss_dict'
+			print 'PTCLatticeFunctionsDictionary: Created initial twiss dictionary \'twiss_dict on MPI process ', rank
 
 	def UpdatePTCTwiss(self, Lattice, turn, verbose=False):
 		self.update_flag = 1
