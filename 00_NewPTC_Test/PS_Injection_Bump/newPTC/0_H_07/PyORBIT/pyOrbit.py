@@ -212,34 +212,8 @@ else:
 	print 'WARNING: Resuming simulation from pickled turn ', sts['turn']
                 
 # Write tunes.str file to set the tune in MAD-X
-# ~ #-----------------------------------------------------------------------
-# ~ if not rank:
-	# ~ print '\n\tWriting tunes.str for MAD-X input on MPI process: ', rank
-	# ~ script_name = '../PS_Lattice/tunes.str'
-	# ~ if os.path.exists(script_name):  
-			# ~ print 'tune file ' + script_name + ' already exists. Deleting'
-			# ~ os.remove(script_name)
-
-	# ~ f= open(script_name,"w")
-
-	# ~ f.write('/**********************************************************************************\n')
-	# ~ f.write('*                             Tunes for PTC-PyORBIT simulation\n')
-	# ~ f.write('***********************************************************************************/\n')
-	# ~ f.write('tune_x = 0.' + str(p['tunex'][-2:]) + ';\n')
-	# ~ f.write('tune_y = 0.' + str(p['tuney'][-2:]) + ';\n')
-	# ~ f.write('lattice_start = ' + str(p['transverse_plane_flag']) + ';     !Choice of wire-scanner for lattice start position\n')
-	# ~ if s['InjectionBump']:
-			# ~ f.write('Injection_Bump = 1;     !Execute close of injection bump')
-	# ~ else:
-			# ~ f.write('Injection_Bump = 0;     !Do not execute close of injection bump')
-	# ~ f.close()
-# ~ print '\n\twrite_tunes orbit_mpi.MPI_Barrier(comm) called on MPI process: ', rank
-# ~ orbit_mpi.MPI_Barrier(comm)
-# ~ print '\n\twrite_tunes orbit_mpi.MPI_Barrier(comm) complete on MPI process: ', rank
-# ~ print 'Writing tunes.str for MAD-X input on MPI process: ', rank, ' : COMPLETE'
+#-----------------------------------------------------------------------
 WriteTunes('../PS_Lattice/tunes.str')
-
-exit(0)
                 
 # Generate Lattice (MADX + PTC) - Use MPI to run on only one 'process'
 #-----------------------------------------------------------------------
