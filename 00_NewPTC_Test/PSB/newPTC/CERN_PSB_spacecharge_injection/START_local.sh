@@ -21,4 +21,4 @@ echo "customEnvironment done"
 #~ source /cvmfs/projects.cern.ch/intelsw/psxe/linux/all-setup.sh
 #~ echo "ifort charged (necessary for running)"
 
-/usr/lib64/openmpi/bin/mpirun -np $2 ${ORBIT_ROOT}/bin/pyORBIT $1
+/usr/lib64/mpich/bin/mpirun -np $2 ${ORBIT_ROOT}/bin/pyORBIT $1

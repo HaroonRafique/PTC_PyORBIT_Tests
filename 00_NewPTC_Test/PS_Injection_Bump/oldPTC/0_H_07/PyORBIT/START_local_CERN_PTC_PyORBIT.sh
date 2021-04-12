@@ -40,4 +40,4 @@ else
    ln -s $ORBIT_ROOT/lib/ lib
 fi
 
-/usr/lib64/openmpi/bin/mpirun -np $2 ${ORBIT_ROOT}/bin/pyORBIT $1
+/usr/lib64/mpich/bin/mpirun -np $2 ${ORBIT_ROOT}/bin/pyORBIT $1
