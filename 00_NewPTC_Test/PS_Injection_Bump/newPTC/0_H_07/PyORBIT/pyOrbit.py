@@ -235,7 +235,7 @@ else:
 # ~ print 'Writing tunes.str for MAD-X input on MPI process: ', rank, ' : COMPLETE'
 WriteTunes('../PS_Lattice/tunes.str')
 
-exit(1)
+exit(0)
                 
 # Generate Lattice (MADX + PTC) - Use MPI to run on only one 'process'
 #-----------------------------------------------------------------------
@@ -257,7 +257,7 @@ from lib.write_ptc_table import write_RFtable
 from simulation_parameters import RFparameters as RF 
 if not rank:
 	if os.path.exists('../PTC-PyORBIT_Tables/'):
-			print '\n\t ../PTC-PyORBIT_Tables/ exists on MPI process: ', rank
+		print '\n\t ../PTC-PyORBIT_Tables/ exists on MPI process: ', rank
 		pass
 	else:
 		print '\n\t creating ../PTC-PyORBIT_Tables/ on MPI process: ', rank
