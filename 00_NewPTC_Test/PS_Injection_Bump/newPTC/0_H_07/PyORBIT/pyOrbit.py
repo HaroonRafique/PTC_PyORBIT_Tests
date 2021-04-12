@@ -187,8 +187,10 @@ mpi_mkdir_p('lost')
 if s['Update_Twiss']:
 	mpi_mkdir_p('All_Twiss')
 	ptc_dictionary_file = 'input/ptc_dictionary.pkl'
-	if not os.path.exists(ptc_dictionary_file):        
-		PTC_Twiss = PTCLatticeFunctionsDictionary()
+	if not os.path.exists(ptc_dictionary_file):  
+		if not rank:      
+			PTC_Twiss = PTCLatticeFunctionsDictionary()
+		orbit_mpi.MPI_Barrier(comm)
 	else:
 		with open(ptc_dictionary_file) as sid:
 			PTC_Twiss = pickle.load(sid)
@@ -203,9 +205,11 @@ status_file = 'input/simulation_status.pkl'
 #-----------------------------------------------------------------------
 if not os.path.exists(status_file):
 	sts = {'turn': -1}
+	print 'Creating simulation pickle'
 else:
 	with open(status_file) as fid:
 		sts = pickle.load(fid)
+	print 'WARNING: Resuming simulation from pickled turn ', sts['turn']
                 
 # Write tunes.str file to set the tune in MAD-X
 # ~ #-----------------------------------------------------------------------
