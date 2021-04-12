@@ -164,7 +164,7 @@ mpi_mkdir_p('lost')
 # Lattice function dictionary to print closed orbit etc
 #-----------------------------------------------------------------------
 if s['Update_Twiss']:
-        mpi_mkdir_p('All_Twiss')
+	mpi_mkdir_p('All_Twiss')
 	ptc_dictionary_file = 'input/ptc_dictionary.pkl'
 	if not os.path.exists(ptc_dictionary_file):        
 		PTC_Twiss = PTCLatticeFunctionsDictionary()
@@ -176,34 +176,40 @@ if s['Update_Twiss']:
 #-----------------------------------------------------------------------
 import pickle # HAVE TO CLEAN THIS FILE BEFORE RUNNING A NEW SIMULATION
 status_file = 'input/simulation_status.pkl'
+
+# If the pickle status file doesn't exist this is a new simulation
+# If it does exist the simulation will resume using the pickle file
+#-----------------------------------------------------------------------
 if not os.path.exists(status_file):
 	sts = {'turn': -1}
 else:
 	with open(status_file) as fid:
 		sts = pickle.load(fid)
                 
-# Write tunes.str file for MAD-X input
+# Write tunes.str file to set the tune in MAD-X
 #-----------------------------------------------------------------------
 if not rank:
-        script_name = '../PS_Lattice/tunes.str'
-        if os.path.exists(script_name):  
-                print 'tune file ' + script_name + ' already exists. Deleting'
-                os.remove(script_name)
+	print '\n\tWriting tunes.str for MAD-X input on MPI process: ', rank
+	script_name = '../PS_Lattice/tunes.str'
+	if os.path.exists(script_name):  
+			print 'tune file ' + script_name + ' already exists. Deleting'
+			os.remove(script_name)
 
-        f= open(script_name,"w")
+	f= open(script_name,"w")
 
-        f.write('/**********************************************************************************\n')
-        f.write('*                             Tunes for PTC-PyORBIT simulation\n')
-        f.write('***********************************************************************************/\n')
-        f.write('tune_x = 0.' + str(p['tunex'][-2:]) + ';\n')
-        f.write('tune_y = 0.' + str(p['tuney'][-2:]) + ';\n')
-        f.write('lattice_start = ' + str(p['transverse_plane_flag']) + ';     !Choice of wire-scanner for lattice start position\n')
-        if s['InjectionBump']:
-                f.write('Injection_Bump = 1;     !Execute close of injection bump')
-        else:
-                f.write('Injection_Bump = 0;     !Do not execute close of injection bump')
-        f.close()
+	f.write('/**********************************************************************************\n')
+	f.write('*                             Tunes for PTC-PyORBIT simulation\n')
+	f.write('***********************************************************************************/\n')
+	f.write('tune_x = 0.' + str(p['tunex'][-2:]) + ';\n')
+	f.write('tune_y = 0.' + str(p['tuney'][-2:]) + ';\n')
+	f.write('lattice_start = ' + str(p['transverse_plane_flag']) + ';     !Choice of wire-scanner for lattice start position\n')
+	if s['InjectionBump']:
+			f.write('Injection_Bump = 1;     !Execute close of injection bump')
+	else:
+			f.write('Injection_Bump = 0;     !Do not execute close of injection bump')
+	f.close()
 orbit_mpi.MPI_Barrier(comm)
+print 'Writing tunes.str for MAD-X input on MPI process: ', rank, ' : COMPLETE'
                 
 # Generate Lattice (MADX + PTC) - Use MPI to run on only one 'process'
 #-----------------------------------------------------------------------

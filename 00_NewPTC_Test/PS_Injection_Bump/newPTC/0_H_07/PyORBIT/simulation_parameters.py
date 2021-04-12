@@ -37,7 +37,7 @@ else:
         exit(0)
 
                 
-parameters['n_macroparticles']			= int(5E5)
+parameters['n_macroparticles']			= int(5E4)
 
 # Make sure to fix the initial distribution at the nominal working point (6.21, 6.24)
 parameters['tomo_file'] = '../../../00_Longitudinal_Distribution/PyORBIT_Tomo_file_MD4224_HB.mat'
@@ -91,9 +91,9 @@ switches = {
 	'InjectionBump': True, # Apply the injection bump in MAD-X and load corresponding PTC tables
 	'CreateDistn': True,  # Load from file to fix initial distribution to the incoming PSB beam
 	'Update_Twiss':	True,  # Perform PTC twiss and dump each turn - needed to output tune changes
-	'GridSizeX': 128,
-	'GridSizeY': 128,
-	'GridSizeZ': 64
+	'GridSizeX': 64,
+	'GridSizeY': 64,
+	'GridSizeZ': 32
 }
 
 if space_charge_flag:
