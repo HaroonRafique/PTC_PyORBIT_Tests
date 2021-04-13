@@ -180,7 +180,7 @@ def WriteTunes(fname):
 	
 # Create folder structure
 #-----------------------------------------------------------------------
-print '\n\t\tmkdir on MPI process: ', rank
+print '\nmkdir on MPI process: ', rank
 mpi_mkdir_p('Plots')
 mpi_mkdir_p('input')
 mpi_mkdir_p('bunch_output')
@@ -223,29 +223,34 @@ WriteTunes('../PS_Lattice/tunes.str')
 # Generate Lattice (MADX + PTC) - Use MPI to run on only one 'process'
 #-----------------------------------------------------------------------
 print '\nStart MADX on MPI process: ', rank
-if not rank:
-	if os.path.exists('PTC-PyORBIT_flat_file.flt'):
-		pass
-	else:
+PTC_File = 'PTC-PyORBIT_flat_file.flt'
+
+if os.path.exists(PTC_File):
+	print '\nPTC-PyORBIT_flat_file.flt exists on MPI process: ', rank
+	pass
+else:
+	if not rank:
+		print '\nMADX running on MPI process: ', rank
 		os.system("./Create_FF_and_Tables.sh")
                 
-print '\n\tmadx orbit_mpi.MPI_Barrier(comm) called on MPI process: ', rank
-orbit_mpi.MPI_Barrier(comm)
-print '\n\tmadx orbit_mpi.MPI_Barrier(comm) complete on MPI process: ', rank
+	print '\n\tmadx orbit_mpi.MPI_Barrier(comm) called on MPI process: ', rank
+	orbit_mpi.MPI_Barrier(comm)
+	print '\n\tmadx orbit_mpi.MPI_Barrier(comm) complete on MPI process: ', rank
 
 # Generate PTC RF table
 #-----------------------------------------------------------------------
-print '\n\t\tCreate RF file on MPI process: ', rank
+print '\nCreate RF file on MPI process: ', rank
 from lib.write_ptc_table import write_RFtable
 from simulation_parameters import RFparameters as RF 
-if not rank:
-	if os.path.exists('../PTC-PyORBIT_Tables/'):
-		print '\n\t ../PTC-PyORBIT_Tables/ exists on MPI process: ', rank
-		pass
-	else:
-		print '\n\t creating ../PTC-PyORBIT_Tables/ on MPI process: ', rank
-		os.makedirs('../PTC-PyORBIT_Tables')
 
+if os.path.exists('../PTC-PyORBIT_Tables/'):
+	print '\n\t ../PTC-PyORBIT_Tables/ exists on MPI process: ', rank
+	pass
+else:
+	print '\n\t creating ../PTC-PyORBIT_Tables/ on MPI process: ', rank
+	mpi_mkdir_p('../PTC-PyORBIT_Tables')
+		
+if not rank:
 	print '\n\t write_RFtable on MPI process: ', rank
 	write_RFtable('../PTC-PyORBIT_Tables/RF_table.ptc', *[RF[k] for k in ['harmonic_factors','time','Ekin_GeV','voltage_MV','phase']])
 
@@ -253,10 +258,11 @@ print '\n\trf_table orbit_mpi.MPI_Barrier(comm) called on MPI process: ', rank
 orbit_mpi.MPI_Barrier(comm)
 print '\n\trf_table orbit_mpi.MPI_Barrier(comm) complete on MPI process: ', rank
 
+
 # Initialize a Teapot-Style PTC lattice
 #-----------------------------------------------------------------------
 print '\n\t\tRead PTC flat file: on MPI process: ', rank
-PTC_File = 'PTC-PyORBIT_flat_file.flt'
+
 Lattice = PTC_Lattice("PS")
 Lattice.readPTC(PTC_File)
 
@@ -302,7 +308,8 @@ if sts['turn'] < 0:
 
 	print '\n\t\tOutput simulation_parameters on MPI process: ', rank
 	for i in p:
-		print '\t', i, '\t = \t', p[i]
+		if not rank: 
+			print '\t', i, '\t = \t', p[i]
 
         d_keys, d = Read_PTC_Twiss_Return_Dict(p['LatticeFile'])
         
@@ -326,7 +333,7 @@ if sts['turn'] < 0:
         twiss_dict['circumference']     = Lattice.getLength()
         twiss_dict['length'] 		= Lattice.getLength()/Lattice.nHarm
         
-        print twiss_dict
+        if not rank: print twiss_dict
 
 	if s['CreateDistn']:
 # Create the initial distribution 

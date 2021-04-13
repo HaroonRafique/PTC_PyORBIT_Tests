@@ -37,7 +37,8 @@ else:
         exit(0)
 
                 
-parameters['n_macroparticles']			= int(5E4)
+# ~ parameters['n_macroparticles']			= int(5E4)
+parameters['n_macroparticles']			= int(5E2)
 
 # Make sure to fix the initial distribution at the nominal working point (6.21, 6.24)
 parameters['tomo_file'] = '../../../00_Longitudinal_Distribution/PyORBIT_Tomo_file_MD4224_HB.mat'

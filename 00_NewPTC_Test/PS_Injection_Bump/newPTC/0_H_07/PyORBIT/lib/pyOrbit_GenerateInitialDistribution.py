@@ -296,7 +296,9 @@ def generate_initial_distribution_from_tomo_manual_Twiss(parameters, TwissDict, 
 				
 		print '\nCreated particle distribution with ' + str(parameters['n_macroparticles']) + ' macroparticles into file: ', output_file
 
-	orbit_mpi.MPI_Barrier(comm)
+	# ~ print '\n\t\tMPI_Barrier called on MPI process: ', orbit_mpi.MPI_Comm_rank(comm)
+	# ~ orbit_mpi.MPI_Barrier(comm)        
+	# ~ print '\n\t\tMPI_Barrier complete on MPI process: ', orbit_mpi.MPI_Comm_rank(comm)
 
 	return output_file
 	

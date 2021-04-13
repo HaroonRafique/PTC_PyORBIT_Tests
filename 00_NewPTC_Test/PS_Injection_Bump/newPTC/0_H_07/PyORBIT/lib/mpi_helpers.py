@@ -1,7 +1,6 @@
 import orbit_mpi
 import os
 
-
 def only_main_rank(func):
 	def call(*args, **kwargs):
 		comm = orbit_mpi.mpi_comm.MPI_COMM_WORLD
