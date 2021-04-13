@@ -63,9 +63,7 @@ readScriptPTC_noSTDOUT = suppress_STDOUT(readScriptPTC)
 comm = orbit_mpi.mpi_comm.MPI_COMM_WORLD
 rank = orbit_mpi.MPI_Comm_rank(comm)
 size = orbit_mpi.MPI_Comm_size(comm)	
-if not rank:
-	print '\n\tPyORBIT: MPI initialised with ' , size, ' processes'
-print '\nMPI Rank:',rank,':\tStart PyORBIT simulation'
+print '\nMPI Rank:',rank,':\tStart PyORBIT simulation: MPI initialised with ' , size, ' processes'
 
 # Functions
 #-----------------------------------------------------------------------
@@ -159,41 +157,47 @@ def GetTunesFromPTC():
 	return Qx, Qy
 
 # Write tunes.str to be read by MAD-X - decorated to run only on process
-@only_main_rank
+# ~ @only_main_rank
 def WriteTunes(fname):	
-	print '\nMPI Rank:',rank,':\tWriteTunes()'
-	
-	if os.path.exists(fname):  
-			print 'WriteTunes::tune file ' + fname + ' already exists. Deleting'
-			os.remove(fname)
-	f= open(fname,"w")
-	f.write('/**********************************************************************************\n')
-	f.write('*                             Tunes for PTC-PyORBIT simulation\n')
-	f.write('***********************************************************************************/\n')
-	f.write('tune_x = 0.' + str(p['tunex'][-2:]) + ';\n')
-	f.write('tune_y = 0.' + str(p['tuney'][-2:]) + ';\n')
-	f.write('lattice_start = ' + str(p['transverse_plane_flag']) + ';     !Choice of wire-scanner for lattice start position\n')
-	if s['InjectionBump']:
-			f.write('Injection_Bump = 1;     !Execute close of injection bump')
-	else:
-			f.write('Injection_Bump = 0;     !Do not execute close of injection bump')
-	f.close()
-	print '\nMPI Rank:',rank,':\tWriteTunes() COMPLETE'
+	comm = orbit_mpi.mpi_comm.MPI_COMM_WORLD
+	rank = orbit_mpi.MPI_Comm_rank(comm)
+	if not rank:
+		print '\nMPI Rank:',rank,':\tWriteTunes()'
+		
+		if os.path.exists(fname):  
+				print 'WriteTunes:: file ' + fname + ' already exists. Deleting'
+				os.remove(fname)
+		f= open(fname,"w")
+		f.write('/**********************************************************************************\n')
+		f.write('*                             Tunes for PTC-PyORBIT simulation\n')
+		f.write('***********************************************************************************/\n')
+		f.write('tune_x = 0.' + str(p['tunex'][-2:]) + ';\n')
+		f.write('tune_y = 0.' + str(p['tuney'][-2:]) + ';\n')
+		f.write('lattice_start = ' + str(p['transverse_plane_flag']) + ';     !Choice of wire-scanner for lattice start position\n')
+		if s['InjectionBump']:
+				f.write('Injection_Bump = 1;     !Execute close of injection bump')
+		else:
+				f.write('Injection_Bump = 0;     !Do not execute close of injection bump')
+		f.close()
+		print '\nMPI Rank:',rank,':\tWriteTunes() COMPLETE'
+	print '\nMPI Rank:',rank,':\tWriteTunes orbit_mpi.MPI_Barrier(comm) called'
+	orbit_mpi.MPI_Barrier(comm)
+	print '\nMPI Rank:',rank,':\tWriteTunes orbit_mpi.MPI_Barrier(comm) COMPLETE'
 	
 # Create folder structure
 #-----------------------------------------------------------------------
-print '\nmkdir on MPI process: ', rank, '\n'
+print '\nMPI Rank:',rank,':\tmkdir'
 mpi_mkdir_p('Plots')
 mpi_mkdir_p('input')
 mpi_mkdir_p('bunch_output')
 mpi_mkdir_p('output')
 mpi_mkdir_p('lost')
+mpi_mkdir_p('All_Twiss')
 
 # Lattice function dictionary to print closed orbit etc
 #-----------------------------------------------------------------------
 if s['Update_Twiss']:	
 	print '\nMPI Rank:',rank,':\tLattice function dictionary'
-	mpi_mkdir_p('All_Twiss')
 	ptc_dictionary_file = 'input/ptc_dictionary.pkl'
 	if not os.path.exists(ptc_dictionary_file):  
 		if not rank:      			
@@ -226,23 +230,23 @@ else:
 # Write tunes.str file to set the tune in MAD-X
 #-----------------------------------------------------------------------
 WriteTunes('../PS_Lattice/tunes.str')
-                
+               
 # Generate Lattice (MADX + PTC) - Use MPI to run on only one 'process'
 #-----------------------------------------------------------------------
 print '\nMPI Rank:',rank,':\tGenerate/Check PTC Flat File'
 PTC_File = 'PTC-PyORBIT_flat_file.flt'
 
-if os.path.exists(PTC_File):
-	print '\nMPI Rank:',rank,':\t',PTC_File,' exists'
-	pass
-else:
-	if not rank:
+if not rank:
+	if os.path.exists(PTC_File):
+		print '\nMPI Rank:',rank,':\t',PTC_File,' exists'
+		pass
+	else:
 		print '\nMPI Rank:',rank,':\t',PTC_File,' doesn\'t exist: running MAD-X'
 		os.system("./Create_FF_and_Tables.sh")
                 
-	print '\nMPI Rank:',rank,':\tMADX orbit_mpi.MPI_Barrier(comm) called'
-	orbit_mpi.MPI_Barrier(comm)
-	print '\nMPI Rank:',rank,':\tMADX orbit_mpi.MPI_Barrier(comm) COMPLETE'
+print '\nMPI Rank:',rank,':\tMADX orbit_mpi.MPI_Barrier(comm) called'
+orbit_mpi.MPI_Barrier(comm)
+print '\nMPI Rank:',rank,':\tMADX orbit_mpi.MPI_Barrier(comm) COMPLETE'
 
 # Generate PTC RF table
 #-----------------------------------------------------------------------
@@ -255,16 +259,16 @@ if os.path.exists(ptc_tables_folder):
 	pass
 else:
 	print '\nMPI Rank:',rank,':\tcreating directory ', ptc_tables_folder
-	mpi_mkdir_p('../PTC-PyORBIT_Tables')
+	os.makedirs(ptc_tables_folder)
 		
-if not rank:
-	print '\nMPI Rank:',rank,':\twrite_RFtable()'
-	write_RFtable('../PTC-PyORBIT_Tables/RF_table.ptc', *[RF[k] for k in ['harmonic_factors','time','Ekin_GeV','voltage_MV','phase']])
+# write_RFtable already calls MPI::Barrier
+print '\nMPI Rank:',rank,':\twrite_RFtable()'
+rf_table_name = ptc_tables_folder + 'RF_table.ptc'
+write_RFtable(rf_table_name, *[RF[k] for k in ['harmonic_factors','time','Ekin_GeV','voltage_MV','phase']])
 
 print '\nMPI Rank:',rank,':\tRF Table orbit_mpi.MPI_Barrier(comm) called'
 orbit_mpi.MPI_Barrier(comm)
 print '\nMPI Rank:',rank,':\tRF Table orbit_mpi.MPI_Barrier(comm) COMPLETE'
-
 
 # Initialize a Teapot-Style PTC lattice
 #-----------------------------------------------------------------------
@@ -313,33 +317,32 @@ if sts['turn'] < 0:
 	kin_Energy = bunch.getSyncParticle().kinEnergy()
 
 	print '\n\t\tOutput simulation_parameters on MPI process: ', rank
-	for i in p:
-		if not rank: 
-			print '\t', i, '\t = \t', p[i]
-
-        d_keys, d = Read_PTC_Twiss_Return_Dict(p['LatticeFile'])
-        
-        print 'd[\'DISP1\'][0] =', d['DISP1'][0]
-        print 'p[\'beta\'][0] =', p['beta']
+	if not rank: 
+		for i in p: print '\t', i, '\t = \t', p[i]
+	
+	d_keys, d = Read_PTC_Twiss_Return_Dict(p['LatticeFile'])
+	
+	print 'd[\'DISP1\'][0] =', d['DISP1'][0]
+	print 'p[\'beta\'][0] =', p['beta']
 
 	twiss_dict = dict()
-        twiss_dict['alpha_x'] 	= float(d['ALFX'][0])
-        twiss_dict['alpha_y'] 	= float(d['ALFY'][0])
-        twiss_dict['beta_x'] 	= float(d['BETX'][0])
-        twiss_dict['beta_y'] 	= float(d['BETY'][0])
-        twiss_dict['D_x'] 		= float(d['DISP1'][0])* float(p['beta']) # Normalisation required when using PTC Twiss with time=true
-        twiss_dict['D_y'] 		= float(d['DISP3'][0])* float(p['beta'])
-        twiss_dict['D_xp'] 		= float(d['DISP2'][0])* float(p['beta'])
-        twiss_dict['D_yp'] 		= float(d['DISP4'][0])* float(p['beta'])
-        twiss_dict['x0'] 		= float(d['X'][0])
-        twiss_dict['xp0'] 		= float(d['PX'][0])
-        twiss_dict['y0'] 		= float(d['Y'][0])
-        twiss_dict['yp0'] 		= float(d['PY'][0])
-        twiss_dict['gamma_transition'] 	= Lattice.gammaT
-        twiss_dict['circumference']     = Lattice.getLength()
-        twiss_dict['length'] 		= Lattice.getLength()/Lattice.nHarm
-        
-        if not rank: print twiss_dict
+	twiss_dict['alpha_x'] 	= float(d['ALFX'][0])
+	twiss_dict['alpha_y'] 	= float(d['ALFY'][0])
+	twiss_dict['beta_x'] 	= float(d['BETX'][0])
+	twiss_dict['beta_y'] 	= float(d['BETY'][0])
+	twiss_dict['D_x'] 		= float(d['DISP1'][0])* float(p['beta']) # Normalisation required when using PTC Twiss with time=true
+	twiss_dict['D_y'] 		= float(d['DISP3'][0])* float(p['beta'])
+	twiss_dict['D_xp'] 		= float(d['DISP2'][0])* float(p['beta'])
+	twiss_dict['D_yp'] 		= float(d['DISP4'][0])* float(p['beta'])
+	twiss_dict['x0'] 		= float(d['X'][0])
+	twiss_dict['xp0'] 		= float(d['PX'][0])
+	twiss_dict['y0'] 		= float(d['Y'][0])
+	twiss_dict['yp0'] 		= float(d['PY'][0])
+	twiss_dict['gamma_transition'] 	= Lattice.gammaT
+	twiss_dict['circumference']     = Lattice.getLength()
+	twiss_dict['length'] 		= Lattice.getLength()/Lattice.nHarm
+	
+	if not rank: print twiss_dict
 
 	if s['CreateDistn']:
 # Create the initial distribution 
@@ -347,7 +350,7 @@ if sts['turn'] < 0:
 		print '\ngenerate_initial_distribution on MPI process: ', rank
 		Particle_distribution_file = generate_initial_distribution_from_tomo_manual_Twiss(p, twiss_dict, 1, output_file='input/ParticleDistribution.in', summary_file='input/ParticleDistribution_summary.txt')
 		# ~ Particle_distribution_file = generate_initial_distribution_from_tomo(p, 1, Lattice, output_file='input/ParticleDistribution.in', summary_file='input/ParticleDistribution_summary.txt')
-
+		
 		print '\nbunch_orbit_to_pyorbit on MPI process: ', rank
 		bunch_orbit_to_pyorbit(paramsDict["length"], kin_Energy, Particle_distribution_file, bunch, p['n_macroparticles'] + 1) #read in only first N_mp particles.
 
