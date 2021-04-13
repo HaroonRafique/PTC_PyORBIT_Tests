@@ -196,6 +196,7 @@ mpi_mkdir_p('All_Twiss')
 
 # Lattice function dictionary to print closed orbit etc
 #-----------------------------------------------------------------------
+PTC_Twiss = PTCLatticeFunctionsDictionary()
 if s['Update_Twiss']:	
 	print '\nMPI Rank:',rank,':\tLattice function dictionary'
 	ptc_dictionary_file = 'input/ptc_dictionary.pkl'
