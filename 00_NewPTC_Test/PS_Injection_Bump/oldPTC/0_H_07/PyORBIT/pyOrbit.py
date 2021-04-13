@@ -58,15 +58,19 @@ from lib.pyOrbit_PrintLatticeFunctionsFromPTC import *
 from lib.pyOrbit_PTCLatticeFunctionsDictionary import *
 readScriptPTC_noSTDOUT = suppress_STDOUT(readScriptPTC)
 
-# MPI stuff
+# MPI initialisation
 #-----------------------------------------------------------------------
 comm = orbit_mpi.mpi_comm.MPI_COMM_WORLD
 rank = orbit_mpi.MPI_Comm_rank(comm)
+size = orbit_mpi.MPI_Comm_size(comm)	
+if not rank:
+	print '\n\tPyORBIT Simulation: MPI initialised with ' , size, ' processes'
 print '\n\tStart PyORBIT simulation on MPI process: ', rank
 
-########################################################################
+# Functions
+#-----------------------------------------------------------------------
+
 # Read PTC Twiss and return dictionary of columns/values
-########################################################################
 def Read_PTC_Twiss_Return_Dict(filename, verbose=True):
     # Dictionary for output
     d = dict()
@@ -152,6 +156,7 @@ def GetTunesFromPTC():
 	os.system('rm TWISS_PTC_table.OUT')
 	return Qx, Qy
 
+# Write tunes.str to be read by MAD-X - decorated to run only on process
 @only_main_rank
 def WriteTunes(fname):
 	print '\n\tWriting tunes.str for MAD-X input on MPI process: ', rank
@@ -279,7 +284,7 @@ for node in Lattice.getNodes():
 	node.addChildNode(myaperturenode, node.EXIT)
 	position += node.getLength()
 
-# Import a bunch and relevant parameters for it
+# Import bunch parameters and generate bunch
 #-----------------------------------------------------------------------
 if sts['turn'] < 0:
 	print '\n\t\tCreate bunch on MPI process: ', rank
@@ -326,12 +331,12 @@ if sts['turn'] < 0:
 	if s['CreateDistn']:
 # Create the initial distribution 
 #-----------------------------------------------------------------------
-                print '\ngenerate_initial_distribution on MPI process: ', rank
-                Particle_distribution_file = generate_initial_distribution_from_tomo_manual_Twiss(p, twiss_dict, 1, output_file='input/ParticleDistribution.in', summary_file='input/ParticleDistribution_summary.txt')
-                # ~ Particle_distribution_file = generate_initial_distribution_from_tomo(p, 1, Lattice, output_file='input/ParticleDistribution.in', summary_file='input/ParticleDistribution_summary.txt')
+		print '\ngenerate_initial_distribution on MPI process: ', rank
+		Particle_distribution_file = generate_initial_distribution_from_tomo_manual_Twiss(p, twiss_dict, 1, output_file='input/ParticleDistribution.in', summary_file='input/ParticleDistribution_summary.txt')
+		# ~ Particle_distribution_file = generate_initial_distribution_from_tomo(p, 1, Lattice, output_file='input/ParticleDistribution.in', summary_file='input/ParticleDistribution_summary.txt')
 
-                print '\bunch_orbit_to_pyorbit on MPI process: ', rank
-                bunch_orbit_to_pyorbit(paramsDict["length"], kin_Energy, Particle_distribution_file, bunch, p['n_macroparticles'] + 1) #read in only first N_mp particles.
+		print '\nbunch_orbit_to_pyorbit on MPI process: ', rank
+		bunch_orbit_to_pyorbit(paramsDict["length"], kin_Energy, Particle_distribution_file, bunch, p['n_macroparticles'] + 1) #read in only first N_mp particles.
 
 	else:
 # OR load bunch from file
@@ -370,7 +375,9 @@ if sts['turn'] < 0:
 	sts['turns_update'] = p['turns_update']
 	sts['turns_print'] = p['turns_print']
 	sts['circumference'] = p['circumference']
+	print '\nBunch creation complete on MPI process: ', rank
 
+print '\nbunch_from_matfile on MPI process: ', rank
 bunch = bunch_from_matfile(sts['mainbunch_file'])
 lostbunch = bunch_from_matfile(sts['lostbunch_file'])
 paramsDict["lostbunch"]=lostbunch
