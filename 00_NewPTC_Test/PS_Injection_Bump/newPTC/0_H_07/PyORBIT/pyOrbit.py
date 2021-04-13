@@ -64,78 +64,79 @@ comm = orbit_mpi.mpi_comm.MPI_COMM_WORLD
 rank = orbit_mpi.MPI_Comm_rank(comm)
 size = orbit_mpi.MPI_Comm_size(comm)	
 if not rank:
-	print '\n\tPyORBIT Simulation: MPI initialised with ' , size, ' processes'
-print '\n\tStart PyORBIT simulation on MPI process: ', rank
+	print '\n\tPyORBIT: MPI initialised with ' , size, ' processes'
+print '\nMPI Rank:',rank,':\tStart PyORBIT simulation'
 
 # Functions
 #-----------------------------------------------------------------------
 
 # Read PTC Twiss and return dictionary of columns/values
 def Read_PTC_Twiss_Return_Dict(filename, verbose=True):
-    # Dictionary for output
-    d = dict()
-    d['HEADER_FILENAME'] = filename
-    keywords = ''
-    
-    # First we open and count header lines
-    fin0=open(filename,'r').readlines()
-    headerlines = 0
-    for l in fin0:
-        # Store each header line
-        headerlines = headerlines + 1
-        # Stop if we find the line starting '* NAME'
-        if '* NAME' in l:
-            keywords = l
-            break
-        # Store the headers as d['HEADER_<name>'] = <value>
-        else:
-            #try:
-            #    d[str('HEADER_'+l.split()[1])]=[float(l.split()[-1])]     
-            #except ValueError:
-            #    d[str('HEADER_'+l.split()[1])]=[str(l.split()[-1])]   
-            if '"' in l:
-                d[str('HEADER_'+l.split()[1])]=[str(l.split('"')[1])]
-            else:
-                d[str('HEADER_'+l.split()[1])]=[float(l.split()[-1])]                 
-    headerlines = headerlines + 1    
-    
-    if verbose: print '\nRead_PTC_Twiss_Return_Dict found Keywords: \n',keywords
-    
-    # Make a list of column keywords to return (as an aid to iterating)
-    dict_keys = []
-    for key in keywords.split():
-        dict_keys.append(key)
-    dict_keys.remove('*')
-    
-    if verbose: print '\nRead_PTC_Twiss_Return_Dict Dict Keys: \n',dict_keys
-    
-    # Initialise empty dictionary entries for column keywords 
-    for key in dict_keys:
-        d[key]=[]
-        
-    if verbose: print '\nRead_PTC_Twiss_Return_Dict header only dictionary \n', d
-    
-    # Strip header
-    fin1=open(filename,'r').readlines()[headerlines:]   
-    
-    # Populate the dictionary line by line
-    for l in fin1:
-        i = -1        
-        for value in l.split():
-            i = i+1
-            if 'NAME' or 'KEYWORD' in dict_keys[i]:
-                d[dict_keys[i]].append(str(value))
-            else:
-                d[dict_keys[i]].append(float(value))    
-                
-    # Return list of column keywords 'dict_keys', and dictionary 'd'
-    return dict_keys, d
+	print '\nMPI Rank:',rank,':\tRead_PTC_Twiss_Return_Dict()'
+	# Dictionary for output
+	d = dict()
+	d['HEADER_FILENAME'] = filename
+	keywords = ''
+
+	# First we open and count header lines
+	fin0=open(filename,'r').readlines()
+	headerlines = 0
+	for l in fin0:
+		# Store each header line
+		headerlines = headerlines + 1
+		# Stop if we find the line starting '* NAME'
+		if '* NAME' in l:
+			keywords = l
+			break
+		# Store the headers as d['HEADER_<name>'] = <value>
+		else:
+			#try:
+			#    d[str('HEADER_'+l.split()[1])]=[float(l.split()[-1])]     
+			#except ValueError:
+			#    d[str('HEADER_'+l.split()[1])]=[str(l.split()[-1])]   
+			if '"' in l:
+				d[str('HEADER_'+l.split()[1])]=[str(l.split('"')[1])]
+			else:
+				d[str('HEADER_'+l.split()[1])]=[float(l.split()[-1])]                 
+	headerlines = headerlines + 1    
+
+	if verbose: print '\nRead_PTC_Twiss_Return_Dict found Keywords: \n',keywords
+
+	# Make a list of column keywords to return (as an aid to iterating)
+	dict_keys = []
+	for key in keywords.split():
+		dict_keys.append(key)
+	dict_keys.remove('*')
+
+	if verbose: print '\nRead_PTC_Twiss_Return_Dict Dict Keys: \n',dict_keys
+
+	# Initialise empty dictionary entries for column keywords 
+	for key in dict_keys:
+		d[key]=[]
+		
+	if verbose: print '\nRead_PTC_Twiss_Return_Dict header only dictionary \n', d
+
+	# Strip header
+	fin1=open(filename,'r').readlines()[headerlines:]   
+
+	# Populate the dictionary line by line
+	for l in fin1:
+		i = -1        
+		for value in l.split():
+			i = i+1
+			if 'NAME' or 'KEYWORD' in dict_keys[i]:
+				d[dict_keys[i]].append(str(value))
+			else:
+				d[dict_keys[i]].append(float(value))    
+				
+	# Return list of column keywords 'dict_keys', and dictionary 'd'
+	return dict_keys, d
 
 # Function to check that a file isn't empty (common PTC file bug)
 def is_non_zero_file(fpath):  
-	print '\n\t\t\tis_non_zero_file:: Checking file ', fpath
-	print '\n\t\t\tis_non_zero_file:: File exists = ', os.path.isfile(fpath)
-	print '\n\t\t\tis_non_zero_file:: Size > 3 bytes = ', os.path.getsize(fpath)
+	print '\n\t\tis_non_zero_file:: Checking file ', fpath
+	print '\t\tis_non_zero_file:: File exists = ', os.path.isfile(fpath)
+	print '\t\tis_non_zero_file:: Size > 3 bytes = ', os.path.getsize(fpath)
 	return os.path.isfile(fpath) and os.path.getsize(fpath) > 3
 
 # Function to check and read PTC file
@@ -148,6 +149,7 @@ def CheckAndReadPTCFile(f):
 
 # Function to open TWISS_PTC_table.OUT and return fractional tunes
 def GetTunesFromPTC():
+	print '\nMPI Rank:',rank,':\tGetTunesFromPTC()'
 	readScriptPTC_noSTDOUT('../PTC/twiss_script.ptc')
 	with open('TWISS_PTC_table.OUT') as f:
 		first_line = f.readline()
@@ -158,11 +160,11 @@ def GetTunesFromPTC():
 
 # Write tunes.str to be read by MAD-X - decorated to run only on process
 @only_main_rank
-def WriteTunes(fname):
-	print '\n\tWriting tunes.str for MAD-X input on MPI process: ', rank
-	# ~ script_name = '../PS_Lattice/tunes.str'
+def WriteTunes(fname):	
+	print '\nMPI Rank:',rank,':\tWriteTunes()'
+	
 	if os.path.exists(fname):  
-			print 'tune file ' + fname + ' already exists. Deleting'
+			print 'WriteTunes::tune file ' + fname + ' already exists. Deleting'
 			os.remove(fname)
 	f= open(fname,"w")
 	f.write('/**********************************************************************************\n')
@@ -176,11 +178,11 @@ def WriteTunes(fname):
 	else:
 			f.write('Injection_Bump = 0;     !Do not execute close of injection bump')
 	f.close()
-	print 'Writing tunes.str for MAD-X input on MPI process: ', rank, ' : COMPLETE'
+	print '\nMPI Rank:',rank,':\tWriteTunes() COMPLETE'
 	
 # Create folder structure
 #-----------------------------------------------------------------------
-print '\nmkdir on MPI process: ', rank
+print '\nmkdir on MPI process: ', rank, '\n'
 mpi_mkdir_p('Plots')
 mpi_mkdir_p('input')
 mpi_mkdir_p('bunch_output')
@@ -189,13 +191,18 @@ mpi_mkdir_p('lost')
 
 # Lattice function dictionary to print closed orbit etc
 #-----------------------------------------------------------------------
-if s['Update_Twiss']:
+if s['Update_Twiss']:	
+	print '\nMPI Rank:',rank,':\tLattice function dictionary'
 	mpi_mkdir_p('All_Twiss')
 	ptc_dictionary_file = 'input/ptc_dictionary.pkl'
 	if not os.path.exists(ptc_dictionary_file):  
-		if not rank:      
+		if not rank:      			
+			print '\nMPI Rank:',rank,':\tPTCLatticeFunctionsDictionary()'
 			PTC_Twiss = PTCLatticeFunctionsDictionary()
+			
+		print '\nMPI Rank:',rank,':\tPTCLatticeFunctionsDictionary orbit_mpi.MPI_Barrier(comm) called'
 		orbit_mpi.MPI_Barrier(comm)
+		print '\nMPI Rank:',rank,':\tPTCLatticeFunctionsDictionary orbit_mpi.MPI_Barrier(comm) COMPLETE'
 	else:
 		with open(ptc_dictionary_file) as sid:
 			PTC_Twiss = pickle.load(sid)
@@ -210,11 +217,11 @@ status_file = 'input/simulation_status.pkl'
 #-----------------------------------------------------------------------
 if not os.path.exists(status_file):
 	sts = {'turn': -1}
-	print 'Creating simulation pickle'
+	print '\nMPI Rank:',rank,':\tStart simulation pickle'
 else:
 	with open(status_file) as fid:
 		sts = pickle.load(fid)
-	print 'WARNING: Resuming simulation from pickled turn ', sts['turn']
+	print '\nMPI Rank:',rank,':\tWARNING: Resuming simulation from pickled turn ', sts['turn']
                 
 # Write tunes.str file to set the tune in MAD-X
 #-----------------------------------------------------------------------
@@ -222,51 +229,50 @@ WriteTunes('../PS_Lattice/tunes.str')
                 
 # Generate Lattice (MADX + PTC) - Use MPI to run on only one 'process'
 #-----------------------------------------------------------------------
-print '\nStart MADX on MPI process: ', rank
+print '\nMPI Rank:',rank,':\tGenerate/Check PTC Flat File'
 PTC_File = 'PTC-PyORBIT_flat_file.flt'
 
 if os.path.exists(PTC_File):
-	print '\nPTC-PyORBIT_flat_file.flt exists on MPI process: ', rank
+	print '\nMPI Rank:',rank,':\t',PTC_File,' exists'
 	pass
 else:
 	if not rank:
-		print '\nMADX running on MPI process: ', rank
+		print '\nMPI Rank:',rank,':\t',PTC_File,' doesn\'t exist: running MAD-X'
 		os.system("./Create_FF_and_Tables.sh")
                 
-	print '\n\tmadx orbit_mpi.MPI_Barrier(comm) called on MPI process: ', rank
+	print '\nMPI Rank:',rank,':\tMADX orbit_mpi.MPI_Barrier(comm) called'
 	orbit_mpi.MPI_Barrier(comm)
-	print '\n\tmadx orbit_mpi.MPI_Barrier(comm) complete on MPI process: ', rank
+	print '\nMPI Rank:',rank,':\tMADX orbit_mpi.MPI_Barrier(comm) COMPLETE'
 
 # Generate PTC RF table
 #-----------------------------------------------------------------------
-print '\nCreate RF file on MPI process: ', rank
+print '\nMPI Rank:',rank,':\tGenerate PTC RF table'
 from lib.write_ptc_table import write_RFtable
 from simulation_parameters import RFparameters as RF 
-
-if os.path.exists('../PTC-PyORBIT_Tables/'):
-	print '\n\t ../PTC-PyORBIT_Tables/ exists on MPI process: ', rank
+ptc_tables_folder = '../PTC-PyORBIT_Tables/'
+if os.path.exists(ptc_tables_folder):
+	print '\nMPI Rank:',rank,':\tdirectory ', ptc_tables_folder,' exists'
 	pass
 else:
-	print '\n\t creating ../PTC-PyORBIT_Tables/ on MPI process: ', rank
+	print '\nMPI Rank:',rank,':\tcreating directory ', ptc_tables_folder
 	mpi_mkdir_p('../PTC-PyORBIT_Tables')
 		
 if not rank:
-	print '\n\t write_RFtable on MPI process: ', rank
+	print '\nMPI Rank:',rank,':\twrite_RFtable()'
 	write_RFtable('../PTC-PyORBIT_Tables/RF_table.ptc', *[RF[k] for k in ['harmonic_factors','time','Ekin_GeV','voltage_MV','phase']])
 
-print '\n\trf_table orbit_mpi.MPI_Barrier(comm) called on MPI process: ', rank
+print '\nMPI Rank:',rank,':\tRF Table orbit_mpi.MPI_Barrier(comm) called'
 orbit_mpi.MPI_Barrier(comm)
-print '\n\trf_table orbit_mpi.MPI_Barrier(comm) complete on MPI process: ', rank
+print '\nMPI Rank:',rank,':\tRF Table orbit_mpi.MPI_Barrier(comm) COMPLETE'
 
 
 # Initialize a Teapot-Style PTC lattice
 #-----------------------------------------------------------------------
-print '\n\t\tRead PTC flat file: on MPI process: ', rank
-
+print '\nMPI Rank:',rank,':\tRead PTC flat file'
 Lattice = PTC_Lattice("PS")
 Lattice.readPTC(PTC_File)
 
-print '\n\t\tRead PTC files on MPI process: ', rank
+print '\nMPI Rank:',rank,':\tRead PTC supplementary files'
 CheckAndReadPTCFile('../PTC/time.ptc')
 CheckAndReadPTCFile('../PTC/fringe.ptc')
 CheckAndReadPTCFile('../PTC/ramp_magnet.ptc')
@@ -275,13 +281,13 @@ CheckAndReadPTCFile('../PTC/energize_lattice.ptc')
 
 # Create a dictionary of parameters
 #-----------------------------------------------------------------------
-print '\n\t\tMake paramsDict on MPI process: ', rank
+print '\nMPI Rank:',rank,':\tMake paramsDict'
 paramsDict = {}
 paramsDict["length"]=Lattice.getLength()/Lattice.nHarm
 
 # Add apertures
 #-----------------------------------------------------------------------
-print '\n\t\tAdd apertures on MPI process: ', rank
+print '\nMPI Rank:',rank,':\tAdd apertures'
 position = 0
 for node in Lattice.getNodes():
 	myaperturenode = TeapotApertureNode(1, 10, 10, position)
