@@ -35,7 +35,6 @@ else:
         print 'simulation_parameters: transverse plane selection not recognised, please use either H or V in the folder name'
         print 'For example: 0_H_07 will launch a no space charge simulation for the horizontal tune of 6.07'
         exit(0)
-
                 
 parameters['n_macroparticles']			= int(5E4)
 

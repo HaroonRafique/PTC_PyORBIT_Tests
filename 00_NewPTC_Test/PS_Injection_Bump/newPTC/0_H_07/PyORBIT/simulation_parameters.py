@@ -35,10 +35,8 @@ else:
         print 'simulation_parameters: transverse plane selection not recognised, please use either H or V in the folder name'
         print 'For example: 0_H_07 will launch a no space charge simulation for the horizontal tune of 6.07'
         exit(0)
-
                 
-# ~ parameters['n_macroparticles']			= int(5E4)
-parameters['n_macroparticles']			= int(5E2)
+parameters['n_macroparticles']			= int(5E4)
 
 # Make sure to fix the initial distribution at the nominal working point (6.21, 6.24)
 parameters['tomo_file'] = '../../../00_Longitudinal_Distribution/PyORBIT_Tomo_file_MD4224_HB.mat'
