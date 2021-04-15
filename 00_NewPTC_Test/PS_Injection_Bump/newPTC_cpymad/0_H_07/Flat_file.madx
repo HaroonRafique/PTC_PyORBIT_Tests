@@ -170,7 +170,6 @@ value, tune_x, tune_y, Qxp, Qyp;
  **********************************************************************/
 create, table=mytable, column=BSEXT_t, BSStren, BSW40, BSW42, BSW43, BSW44, xmax, xcomin0, xcomax0, Qx, Qy, Qx0, Qy0, K2_S40, K2_S42, K2_S43, K2_S44;
 
-
 IF(Injection_Bump==1){EXEC, Apply_Injection_Bump();}
 
 /***********************************************************************
