@@ -13,9 +13,9 @@ scan_tune = os.getcwd().split('/')[-2][-2:]
 # ~ transverse_plane = 'H'
 # ~ scan_tune = '07'
 
-print( 'simulation_parameters: space charge = ', space_charge_flag)
-print( 'simulation_parameters: transverse_plane = ', transverse_plane)
-print( 'simulation_parameters: scan_tune = ', scan_tune)
+print 'simulation_parameters: space charge = ', space_charge_flag
+print 'simulation_parameters: transverse_plane = ', transverse_plane
+print 'simulation_parameters: scan_tune = ', scan_tune
 
 parameters = {}
 
@@ -32,8 +32,8 @@ elif transverse_plane == 'V':
         parameters['lattice_start'] 	= 'PR.BWSV64'
         parameters['tuney']             = '6.' + str(scan_tune)
 else:
-        print( 'simulation_parameters: transverse plane selection not recognised, please use either H or V in the folder name')
-        print( 'For example: 0_H_07 will launch a no space charge simulation for the horizontal tune of 6.07')
+        print 'simulation_parameters: transverse plane selection not recognised, please use either H or V in the folder name'
+        print 'For example: 0_H_07 will launch a no space charge simulation for the horizontal tune of 6.07'
         exit(0)
                 
 parameters['n_macroparticles']			= int(5E4)
@@ -61,7 +61,7 @@ parameters['macrosize']			= parameters['intensity']/float(parameters['n_macropar
 # PS Injection 1.4 GeV
 parameters['gamma'] 	= 2.49253731343
 parameters['beta'] 	= np.sqrt(parameters['gamma']**2-1)/parameters['gamma']
-print( 'beta = ', parameters['beta'])
+print 'beta = ', parameters['beta'] 
 c 			= 299792458
 parameters['sig_z'] 	= (parameters['beta'] * c * parameters['blength'])/4.
 
@@ -69,16 +69,18 @@ parameters['turns_max'] = int(2200)
 
 # Define how often we dump bunch output files
 #-----------------------------------------------------------------------
+tu1 = range(-1, parameters['turns_max'], 100) # every 100 turns
+tu2 = range(1, 100)              # every turn for the first 100 turns
+tu = tu2 + tu1
+
 parameters['turns_max'] = int(2200)
-tu1                     = range(-1,2200, 50)
+tu1                     = range(-1, parameters['turns_max'], 50)
 tu2                     = range(50, 100, 10) 
 tu3                     = range(1, 50) # every turn for the first 50 turns
-tu = (list(tu1) + list(tu2) + list(tu3))
+tu                      = tu2 + tu1 + tu3 
 tu.append(874) # Wire Scanner at ctime = 172 s
 tu.append(2185)# Wire Scanner at ctime = 175 s
 # ~ tu.append(6556)# Wire Scanner at ctime = 185 s
-tu = sorted(tu)
-
 parameters['turns_print'] = sorted(tu)
 parameters['turns_update'] = sorted(tu)
 
@@ -86,7 +88,7 @@ parameters['turns_update'] = sorted(tu)
 #-----------------------------------------------------------------------
 switches = {
 	'InjectionBump': True, # Apply the injection bump in MAD-X and load corresponding PTC tables
-	'CreateDistn': True,  # Load from file to fix initial distribution to the incoming PSB beam
+	'CreateDistn': False,  # Load from file to fix initial distribution to the incoming PSB beam
 	'Update_Twiss':	True,  # Perform PTC twiss and dump each turn - needed to output tune changes
 	'GridSizeX': 64,
 	'GridSizeY': 64,
@@ -96,18 +98,18 @@ switches = {
 if space_charge_flag:
         switches['Space_Charge'] = True        
         if transverse_plane == 'H': 
-                parameters['input_distn'] = '../../../01_Generate_Initial_Distribution/500000/1_H_21/bunch_output/mainbunch_-000001.mat'
+                parameters['input_distn'] = '../../../00_Longitudinal_Distribution/500000/1_H_21/bunch_output/mainbunch_-000001.mat'
                 # ~ parameters['input_distn'] = '../../../07_Dispersion_Mismatch/Initial_Distributions/' + str(parameters['n_macroparticles']) + '/1_H_21/bunch_output/mainbunch_-000001.mat'
         else:
-                parameters['input_distn'] = '../../../01_Generate_Initial_Distribution/500000/1_V_24/bunch_output/mainbunch_-000001.mat'
+                parameters['input_distn'] = '../../../00_Longitudinal_Distribution/500000/1_V_24/bunch_output/mainbunch_-000001.mat'
                 # ~ parameters['input_distn'] = '../../../07_Dispersion_Mismatch/Initial_Distributions/' + str(parameters['n_macroparticles']) + '/1_V_24/bunch_output/mainbunch_-000001.mat'
 else:
         switches['Space_Charge'] = False
         if transverse_plane == 'H': 
-                parameters['input_distn'] = '../../../01_Generate_Initial_Distribution/500000/0_H_21/bunch_output/mainbunch_-000001.mat'
+                parameters['input_distn'] = '../../../00_Longitudinal_Distribution/500000/0_H_21/bunch_output/mainbunch_-000001.mat'
                 # ~ parameters['input_distn'] = '../../../07_Dispersion_Mismatch/Initial_Distributions/' + str(parameters['n_macroparticles']) + '/0_H_21/bunch_output/mainbunch_-000001.mat'
         else:
-                parameters['input_distn'] = '../../../01_Generate_Initial_Distribution/500000/0_V_24/bunch_output/mainbunch_-000001.mat'
+                parameters['input_distn'] = '../../../00_Longitudinal_Distribution/500000/0_V_24/bunch_output/mainbunch_-000001.mat'
                 # ~ parameters['input_distn'] = '../../../07_Dispersion_Mismatch/Initial_Distributions/' + str(parameters['n_macroparticles']) + '/0_V_24/bunch_output/mainbunch_-000001.mat'
 
 # PTC RF Table Parameters

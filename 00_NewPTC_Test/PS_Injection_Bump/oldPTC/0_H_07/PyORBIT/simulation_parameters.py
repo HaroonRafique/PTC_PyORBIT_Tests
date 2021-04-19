@@ -88,7 +88,7 @@ parameters['turns_update'] = sorted(tu)
 #-----------------------------------------------------------------------
 switches = {
 	'InjectionBump': True, # Apply the injection bump in MAD-X and load corresponding PTC tables
-	'CreateDistn': True,  # Load from file to fix initial distribution to the incoming PSB beam
+	'CreateDistn': False,  # Load from file to fix initial distribution to the incoming PSB beam
 	'Update_Twiss':	True,  # Perform PTC twiss and dump each turn - needed to output tune changes
 	'GridSizeX': 64,
 	'GridSizeY': 64,
@@ -98,18 +98,18 @@ switches = {
 if space_charge_flag:
         switches['Space_Charge'] = True        
         if transverse_plane == 'H': 
-                parameters['input_distn'] = '../../../01_Generate_Initial_Distribution/500000/1_H_21/bunch_output/mainbunch_-000001.mat'
+                parameters['input_distn'] = '../../../00_Longitudinal_Distribution/500000/1_H_21/bunch_output/mainbunch_-000001.mat'
                 # ~ parameters['input_distn'] = '../../../07_Dispersion_Mismatch/Initial_Distributions/' + str(parameters['n_macroparticles']) + '/1_H_21/bunch_output/mainbunch_-000001.mat'
         else:
-                parameters['input_distn'] = '../../../01_Generate_Initial_Distribution/500000/1_V_24/bunch_output/mainbunch_-000001.mat'
+                parameters['input_distn'] = '../../../00_Longitudinal_Distribution/500000/1_V_24/bunch_output/mainbunch_-000001.mat'
                 # ~ parameters['input_distn'] = '../../../07_Dispersion_Mismatch/Initial_Distributions/' + str(parameters['n_macroparticles']) + '/1_V_24/bunch_output/mainbunch_-000001.mat'
 else:
         switches['Space_Charge'] = False
         if transverse_plane == 'H': 
-                parameters['input_distn'] = '../../../01_Generate_Initial_Distribution/500000/0_H_21/bunch_output/mainbunch_-000001.mat'
+                parameters['input_distn'] = '../../../00_Longitudinal_Distribution/500000/0_H_21/bunch_output/mainbunch_-000001.mat'
                 # ~ parameters['input_distn'] = '../../../07_Dispersion_Mismatch/Initial_Distributions/' + str(parameters['n_macroparticles']) + '/0_H_21/bunch_output/mainbunch_-000001.mat'
         else:
-                parameters['input_distn'] = '../../../01_Generate_Initial_Distribution/500000/0_V_24/bunch_output/mainbunch_-000001.mat'
+                parameters['input_distn'] = '../../../00_Longitudinal_Distribution/500000/0_V_24/bunch_output/mainbunch_-000001.mat'
                 # ~ parameters['input_distn'] = '../../../07_Dispersion_Mismatch/Initial_Distributions/' + str(parameters['n_macroparticles']) + '/0_V_24/bunch_output/mainbunch_-000001.mat'
 
 # PTC RF Table Parameters
