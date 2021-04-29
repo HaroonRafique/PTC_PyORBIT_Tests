@@ -48,7 +48,7 @@ manual_tasks = 40	# manually change ntasks
 output_file_name = 'slurm.%N.%j.out'
 error_file_name = 'slurm.%N.%j.err'
 root_dir = '/hpcscratch/user/harafiqu'
-simulation_file = 'pyOrbit.py'
+simulation_file = 'PSB_spacecharge_injection_acc.py'
 #-----------------------------------------------------------------------
 #	AUTOMATICALLY FORMAT SCRIPT
 #-----------------------------------------------------------------------  
