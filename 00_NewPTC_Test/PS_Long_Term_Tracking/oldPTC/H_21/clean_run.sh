@@ -12,5 +12,6 @@ rm *.tfs
 rm PTC-PyORBIT_flat_file.flt
 rm tunespread.dat
 rm madx.ps
+rm Poincare.dat
 
 . clean_junk.sh

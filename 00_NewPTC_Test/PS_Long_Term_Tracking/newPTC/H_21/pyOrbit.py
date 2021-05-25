@@ -44,6 +44,7 @@ from lib.pyOrbit_Tunespread_Calculator import *
 from lib.pyOrbit_GenerateInitialDistribution import *
 from lib.pyOrbit_PrintLatticeFunctionsFromPTC import *
 from lib.pyOrbit_PTCLatticeFunctionsDictionary import *
+from lib.pyOrbit_ParticleOutputDictionary import *
 readScriptPTC_noSTDOUT = suppress_STDOUT(readScriptPTC)
 
 # MPI stuff
@@ -130,6 +131,7 @@ orbit_mpi.MPI_Barrier(comm)
 #-----------------------------------------------------------------------
 print '\nStart MADX on MPI process: ', rank
 if not rank:
+	# ~ os.system("../../../../madx-linux64_v5_02_00 < Flat_file.madx")
 	os.system("../../../../madx-linux64_v5_06_01 < Flat_file.madx")
 	# ~ os.system("/afs/cern.ch/eng/sl/MAD-X/pro/releases/5.02.00/madx-linux64 < Flat_file.madx")
 orbit_mpi.MPI_Barrier(comm)
@@ -186,7 +188,7 @@ if sts['turn'] < 0:
 	p['energy']          = 1e9 * bunch.mass() * bunch.getSyncParticle().gamma()
 	# ~ p['bunch_length'] = p['sig_z']/speed_of_light/bunch.getSyncParticle().beta()*4
 	p['bunch_length'] = p['bunch_length']
-	kin_Energy = bunch.getSyncParticle().kinEnergy()
+	# ~ kin_Energy = bunch.getSyncParticle().kinEnergy()
 
 	print '\n\t\tOutput simulation_parameters on MPI process: ', rank
 	for i in p:
@@ -196,6 +198,9 @@ if sts['turn'] < 0:
 		Particle_distribution_file = generate_initial_poincare_distributionH(p['InitialDistnSigma'], p, Lattice, output_file='input/ParticleDistribution.in', summary_file='input/ParticleDistribution_summary.txt')
 	else:
 		Particle_distribution_file = generate_initial_poincare_distributionV(p['InitialDistnSigma'], p, Lattice, output_file='input/ParticleDistribution.in', summary_file='input/ParticleDistribution_summary.txt')
+	
+	print '\nbunch_orbit_to_pyorbit on MPI process: ', rank
+	bunch_orbit_to_pyorbit(paramsDict["length"], bunch.getSyncParticle().kinEnergy(), Particle_distribution_file, bunch, p['n_macroparticles'] + 1) #read in only first N_mp particles.
 
 # Add Macrosize to bunch
 #-----------------------------------------------------------------------
@@ -232,6 +237,12 @@ bunch = bunch_from_matfile(sts['mainbunch_file'])
 lostbunch = bunch_from_matfile(sts['lostbunch_file'])
 paramsDict["lostbunch"]=lostbunch
 paramsDict["bunch"]= bunch
+
+# ParticleOutputDictionary for poincare sections instead of dumping bunch files
+#-----------------------------------------------------------------------
+particleDictionary = ParticleOutputDictionary()
+particleDictionary.AddNParticles(p['n_macroparticles'])
+
 
 # Add tune analysis child node
 #-----------------------------------------------------
@@ -352,6 +363,12 @@ if s['Update_Twiss']:
 
 output.update()
 
+print "p['n_macroparticles'] = ", p['n_macroparticles']
+
+for i in range(0, p['n_macroparticles'],1):
+	print bunch.x(i)
+particleDictionary.Update(bunch, turn, verbose=True)
+
 if os.path.exists(output_file):
 	output.import_from_matfile(output_file)
 
@@ -379,6 +396,7 @@ for turn in range(sts['turn']+1, sts['turns_max']):
 	if turn in sts['turns_update']:	sts['turn'] = turn
 
 	output.update()
+	particleDictionary.Update(bunch, turn)
 
 	if turn in sts['turns_print']:
 		saveBunchAsMatfile(bunch, "input/mainbunch")
@@ -388,3 +406,5 @@ for turn in range(sts['turn']+1, sts['turns_max']):
 		if not rank:
 			with open(status_file, 'w') as fid:
 				pickle.dump(sts, fid)
+				
+particleDictionary.PrintAllParticles('Poincare.dat')
