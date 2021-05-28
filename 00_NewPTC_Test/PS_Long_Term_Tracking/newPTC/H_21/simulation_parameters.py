@@ -29,7 +29,7 @@ else:
         print 'For example: H_07 will launch a simulation for the horizontal tune of 6.07'
         exit(0)
                 
-parameters['turns_max'] 		= int(1024)
+parameters['turns_max'] 		= int(5E4)
 parameters['n_macroparticles']	= int(21)
 parameters['InitialDistnSigma'] = 10.	# Poincare distribution limits in units of sigma
 
