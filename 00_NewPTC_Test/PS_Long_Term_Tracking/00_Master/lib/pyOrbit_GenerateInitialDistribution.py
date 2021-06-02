@@ -10,7 +10,7 @@ import scipy.io as sio
 from bunch import Bunch
 from orbit.injection.joho import JohoLongitudinal
 from orbit.bunch_generators import TwissContainer, TwissAnalysis
-from orbit.bunch_generators import WaterBagDist2D, GaussDist2D, KVDist2D
+from orbit.bunch_generators import WaterBagDist2D, GaussDist2D, KVDist2D, KVDist1D
 from orbit.utils.consts import mass_proton, speed_of_light, pi
 from orbit.utils.orbit_mpi_utils import bunch_orbit_to_pyorbit, bunch_pyorbit_to_orbit
 from orbit.bunch_utils import ParticleIdNumber
@@ -641,7 +641,7 @@ def generate_initial_poincare_distributionV(n_sigma, parameters, Lattice, output
         return generate_initial_poincare_distribution(n_sigma, parameters, Lattice, 0, output_file, summary_file, outputFormat)
 
 def generate_initial_poincare_distribution(n_sigma, parameters, Lattice, horizontal = 1,  output_file = 'Input/ParticleDistribution.in', summary_file = 'Input/ParticleDistribution_summary.txt', outputFormat='Orbit'):
-        parameters['alphax0'] = Lattice.alphax0
+	parameters['alphax0'] = Lattice.alphax0
 	parameters['betax0']  = Lattice.betax0
 	parameters['alphay0'] = Lattice.alphay0
 	parameters['betay0']  = Lattice.betay0
@@ -683,26 +683,25 @@ def generate_initial_poincare_distribution(n_sigma, parameters, Lattice, horizon
 		with open(output_file,"w") as fid:
 			csv_writer = csv.writer(fid, delimiter=' ')
 
-
 			for i in range(parameters['n_macroparticles']):
-                                # RANDOM UNIFORM
-                                # ~ x[i] = random.uniform(0., n_sigma) * np.sqrt(parameters['betax0'] * parameters['epsn_x'])
-                                # EQUAL STEPS
-                                if horizontal:
-                                        # ~ print 'beta = ',parameters['beta'], ' gamma = ', parameters['gamma']
-                                        x[i] = i * float(n_sigma/float(parameters['n_macroparticles'])) * np.sqrt(float(parameters['betax0']) * ( parameters['epsn_x'] / (parameters['beta'] * parameters['gamma'])))
-                                        # ~ x[i] = i * float(n_sigma/float(parameters['n_macroparticles']))
-                                        # ~ print 'Generate Poincare Distn: maximum sigma = ', n_sigma, ', current particle = ', i * float(n_sigma/float(parameters['n_macroparticles'])), ' sigma'
-                                        # ~ print 'eps_geo_x = ', ( parameters['epsn_x'] / (parameters['beta'] * parameters['gamma']))
-                                        # ~ print 'beta_x0 = ', float(parameters['betax0'])  
-                                        # ~ print 'sigma_x = ', np.sqrt(float(parameters['betax0']) * ( parameters['epsn_x'] / (parameters['beta'] * parameters['gamma'])))
-                                elif not horizontal:
-                                        # ~ print '\nVERTICAL BUNCH: n_sigma = ',n_sigma, ', sigma = ',  (np.sqrt(parameters['betay0'] * parameters['epsn_y']))
-                                        # ~ print '\ty =', i * (n_sigma/parameters['n_macroparticles']) * np.sqrt(parameters['betay0'] * parameters['epsn_y'])
-                                        # ~ print '\ti = ', i, ', betay0 = ',  parameters['betay0'], ', epsn_y = ', parameters['epsn_y'], ', macroparticles = ',  parameters['n_macroparticles']
-                                        # ~ print '\tsqrt(bet*eps) = ', np.sqrt(parameters['betay0'] * parameters['epsn_y'])
-                                        # ~ print '\tn_sigma/macro = ', float(n_sigma/float(parameters['n_macroparticles']))
-                                        y[i] = i * float(n_sigma/float(parameters['n_macroparticles'])) * np.sqrt(float(parameters['betay0']) * ( parameters['epsn_y'] / (parameters['beta'] * parameters['gamma'])))
+				# RANDOM UNIFORM
+				# ~ x[i] = random.uniform(0., n_sigma) * np.sqrt(parameters['betax0'] * parameters['epsn_x'])
+				# EQUAL STEPS
+				if horizontal:
+						# ~ print 'beta = ',parameters['beta'], ' gamma = ', parameters['gamma']
+						x[i] = i * float(n_sigma/float(parameters['n_macroparticles'])) * np.sqrt(float(parameters['betax0']) * ( parameters['epsn_x'] / (parameters['beta'] * parameters['gamma'])))
+						# ~ print 'Generate Poincare Distn: maximum sigma = ', n_sigma, ', current particle = ', i * float(n_sigma/float(parameters['n_macroparticles'])), ' sigma = ', x[i], ' m'
+						# ~ print 'eps_geo_x = ', ( parameters['epsn_x'] / (parameters['beta'] * parameters['gamma']))
+						# ~ print 'beta_x0 = ', float(parameters['betax0'])  
+						# ~ print 'sigma_x = ', np.sqrt(float(parameters['betax0']) * ( parameters['epsn_x'] / (parameters['beta'] * parameters['gamma'])))
+						# ~ print 'sigma_x = ', np.sqrt(float(parameters['betax0']) * ( parameters['epsn_x'] / (parameters['beta'] * parameters['gamma'])))
+				elif not horizontal:
+						# ~ print '\nVERTICAL BUNCH: n_sigma = ',n_sigma, ', sigma = ',  (np.sqrt(parameters['betay0'] * parameters['epsn_y']))
+						# ~ print '\ty =', i * (n_sigma/parameters['n_macroparticles']) * np.sqrt(parameters['betay0'] * parameters['epsn_y'])
+						# ~ print '\ti = ', i, ', betay0 = ',  parameters['betay0'], ', epsn_y = ', parameters['epsn_y'], ', macroparticles = ',  parameters['n_macroparticles']
+						# ~ print '\tsqrt(bet*eps) = ', np.sqrt(parameters['betay0'] * parameters['epsn_y'])
+						# ~ print '\tn_sigma/macro = ', float(n_sigma/float(parameters['n_macroparticles']))
+						y[i] = i * float(n_sigma/float(parameters['n_macroparticles'])) * np.sqrt(float(parameters['betay0']) * ( parameters['epsn_y'] / (parameters['beta'] * parameters['gamma'])))
 
 				if outputFormat == 'Orbit':
 					x[i] *= 1000.
@@ -711,7 +710,7 @@ def generate_initial_poincare_distribution(n_sigma, parameters, Lattice, horizon
 					yp[i] *= 1000.
 					dE[i] /= 1.e9
 					csv_writer.writerow([x[i], xp[i], y[i], yp[i], phi[i], dE[i]])
-				#csv_writer.writerow([x[i], xp[i], y[i], yp[i], z[i], dE[i]])
+					#csv_writer.writerow([x[i], xp[i], y[i], yp[i], z[i], dE[i]])
 		if summary_file:
 			with open(summary_file, 'w') as fid:
 				map(lambda key: fid.write(key + ' = ' + str(parameters[key]) + '\n'), parameters)

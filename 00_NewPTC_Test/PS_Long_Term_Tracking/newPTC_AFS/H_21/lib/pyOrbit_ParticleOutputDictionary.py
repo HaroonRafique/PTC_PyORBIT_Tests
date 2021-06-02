@@ -112,7 +112,7 @@ class ParticleOutputDictionary(object):
 					f = open(filename,"w+")
 					f.write("#ParticleID\tTurn\tx[m]\txp\ty[m]\typ\tz[m]\tdE[GeV]")
 				
-				f.write("\n%i\t%i\t%f\t%f\t%f\t%f\t%f\t%f" % ( 	\
+					f.write("\n%i\t%i\t%.12f\t%.12f\t%.12f\t%.12f\t%.12f\t%.12f" % ( 	\
 					n, turn, 										\
 					self.particles[n][turn]['x'],		\
 					self.particles[n][turn]['xp'],	\
@@ -143,7 +143,7 @@ class ParticleOutputDictionary(object):
 					f.write("#ParticleID\tTurn\tx[m]\txp\ty[m]\typ\tz[m]\tdE[GeV]")
 				
 				for t in self.turn_list:				
-					f.write("\n%i\t%i\t%f\t%f\t%f\t%f\t%f\t%f" % ( 	\
+					f.write("\n%i\t%i\t%.12f\t%.12f\t%.12f\t%.12f\t%.12f\t%.12f" % ( 	\
 						n, t, 										\
 						self.particles[n][t]['x'],		\
 						self.particles[n][t]['xp'],		\
@@ -172,7 +172,7 @@ class ParticleOutputDictionary(object):
 			
 			for n in self.particle_list:	
 				for t in self.turn_list:			
-					f.write("\n%i\t%i\t%f\t%f\t%f\t%f\t%f\t%f" % ( 	\
+					f.write("\n%i\t%i\t%.12f\t%.12f\t%.12f\t%.12f\t%.12f\t%.12f" % ( 	\
 						n, t, 										\
 						self.particles[n][t]['x'],		\
 						self.particles[n][t]['xp'],		\
