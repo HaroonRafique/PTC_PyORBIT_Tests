@@ -134,6 +134,7 @@ if not rank:
 	# ~ os.system("../../../../madx-linux64_v5_02_00 < Flat_file.madx")
 	os.system("../../../../madx-linux64_v5_06_01 < Flat_file.madx")
 	# ~ os.system("/afs/cern.ch/eng/sl/MAD-X/pro/releases/5.02.00/madx-linux64 < Flat_file.madx")
+	# ~ os.system("/afs/cern.ch/eng/sl/MAD-X/pro/releases/5.06.01//madx-linux64 < Flat_file.madx")
 orbit_mpi.MPI_Barrier(comm)
 
 # Generate PTC RF table
@@ -399,9 +400,9 @@ for turn in range(sts['turn']+1, sts['turns_max']):
 	particleDictionary.Update(bunch, turn)
 
 	if turn in sts['turns_print']:
-		saveBunchAsMatfile(bunch, "input/mainbunch")
-		saveBunchAsMatfile(bunch, "bunch_output/mainbunch_%s"%(str(turn).zfill(6)))
-		saveBunchAsMatfile(lostbunch, "lost/lostbunch_%s"%(str(turn).zfill(6)))
+		# ~ saveBunchAsMatfile(bunch, "input/mainbunch")
+		# ~ saveBunchAsMatfile(bunch, "bunch_output/mainbunch_%s"%(str(turn).zfill(6)))
+		# ~ saveBunchAsMatfile(lostbunch, "lost/lostbunch_%s"%(str(turn).zfill(6)))
 		output.save_to_matfile(output_file)
 		if not rank:
 			with open(status_file, 'w') as fid:
