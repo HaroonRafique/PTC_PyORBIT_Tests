@@ -154,6 +154,79 @@ def add_input_file(dd, filename, label):
     return dd
 
 ########################################################################
+# PyORBIT Matfile bunch to pandas dataframe
+########################################################################
+def bunch_file_to_dataframe(file, input_dataframe=None):
+    column_names = ['turn','id','x','xp','y','yp','dE','z']
+
+    if input_dataframe is None:
+        df = pd.DataFrame({'turn': pd.Series([], dtype='int'),
+                   'id': pd.Series([], dtype='int'),
+                   'x': pd.Series([], dtype='float'),
+                   'xp': pd.Series([], dtype='float'),
+                   'y': pd.Series([], dtype='float'),
+                   'yp': pd.Series([], dtype='float'),
+                   'z': pd.Series([], dtype='float'),
+                   'dE': pd.Series([], dtype='float')})
+        
+    else:        
+        df = input_dataframe
+        if ('turn' or 'id' or 'x' or 'xp' or 'y' or 'yp' or 'dE' or 'z') not in df.columns:
+            print('bunch_file_to_dataframe::ERROR: Input dataframe does not contain expected headings')
+            exit(0)
+    
+    particles = sio.loadmat(file, squeeze_me=True, struct_as_record=False)['particles']
+    n_part = len(particles.x)
+    test = file[-11]
+    if test == '-':
+        turn = int(-1)
+    else:
+        turn = int(file[-10:-4])
+    
+    if turn not in df.turn.values:
+        for i in range(0,n_part,1):  
+            # Note we put this into a dataframe initially to maintain datatypes
+            data = pd.DataFrame(
+            {'turn': int(turn),
+            'id': int(i),
+            'x' : particles.x[i],
+            'xp': particles.xp[i],
+            'y' : particles.y[i],
+            'yp': particles.yp[i],
+            'z' : particles.z[i],
+            'dE': particles.dE[i]},
+            index=[0])
+            df = df.append(data, ignore_index=True)
+    
+    return df
+
+########################################################################
+# List of PyORBIT Matfile bunches to pandas dataframe
+########################################################################
+def bunch_files_to_dataframe(file_list, input_dataframe=None):
+    
+    if input_dataframe== None:
+        df = pd.DataFrame({'turn': pd.Series([], dtype='int'),
+                   'id': pd.Series([], dtype='int'),
+                   'x': pd.Series([], dtype='float'),
+                   'xp': pd.Series([], dtype='float'),
+                   'y': pd.Series([], dtype='float'),
+                   'yp': pd.Series([], dtype='float'),
+                   'z': pd.Series([], dtype='float'),
+                   'dE': pd.Series([], dtype='float')})
+        
+    else:
+        df = input_dataframe
+        if 'turn' or 'id' or 'x' or 'xp' or 'y' or 'yp' or 'dE' or 'z' not in df.columns:
+            print('bunch_files_to_dataframe::ERROR: Input dataframe does not contain expected headings')
+            exit(0)
+        
+    for file in file_list:
+        df = bunch_file_to_dataframe(file, df)
+    
+    return df
+
+########################################################################
 # Read PTC Twiss and return dictionary of columns/values
 ########################################################################
 def Read_PTC_Twiss_Return_Dict(filename, verbose=True):
