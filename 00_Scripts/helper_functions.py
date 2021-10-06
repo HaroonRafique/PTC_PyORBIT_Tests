@@ -1,7 +1,6 @@
 import os
 import tfs
 import numpy as np
-import scipy.io as sio 
 from math import log10, floor
 
 import matplotlib
@@ -72,12 +71,6 @@ def check_if_file_exists(name):
         ret_val = True
     return ret_val
     
-def is_non_zero_file(fpath):  
-	print ('\n\t\t\tis_non_zero_file:: Checking file ', fpath)
-	print ('\n\t\t\tis_non_zero_file:: File exists = ', os.path.isfile(fpath))
-	print ('\n\t\t\tis_non_zero_file:: Size > 3 bytes = ', os.path.getsize(fpath))
-	return os.path.isfile(fpath) and os.path.getsize(fpath) > 3
-
 ########################################################################
 # Make directory
 ########################################################################  
@@ -129,102 +122,8 @@ def z_to_time(z, beta):
 ########################################################################
 # Round number to n significant figures
 ########################################################################    
-def round_sig(x, sig=5):
+def round_sig(x, sig=3):
     return round(x, sig-int(floor(log10(abs(x))))-1)      
-    
-########################################################################
-# Add PyORBIT Matfile bunch
-########################################################################
-def add_bunch_file(dd, filename, label):
-    f = filename
-    p = sio.loadmat(f, squeeze_me=True,  struct_as_record=False)['particles']
-    dd[label] = p
-    print ('\tAdded output data from ', filename, '\t dictionary key: ', label)
-    return dd
-    
-########################################################################
-# Add PyORBIT Matfile output
-########################################################################
-def add_input_file(dd, filename, label):
-    f = filename
-    p = dict()
-    sio.loadmat(f, mdict=p)
-    dd[label] = p
-    print ('\tAdded output data from ', filename, '\t dictionary key: ', label)
-    return dd
-
-########################################################################
-# PyORBIT Matfile bunch to pandas dataframe
-########################################################################
-def bunch_file_to_dataframe(file, input_dataframe=None):
-    column_names = ['turn','id','x','xp','y','yp','dE','z']
-
-    if input_dataframe is None:
-        df = pd.DataFrame({'turn': pd.Series([], dtype='int'),
-                   'id': pd.Series([], dtype='int'),
-                   'x': pd.Series([], dtype='float'),
-                   'xp': pd.Series([], dtype='float'),
-                   'y': pd.Series([], dtype='float'),
-                   'yp': pd.Series([], dtype='float'),
-                   'z': pd.Series([], dtype='float'),
-                   'dE': pd.Series([], dtype='float')})
-        
-    else:        
-        df = input_dataframe
-        if ('turn' or 'id' or 'x' or 'xp' or 'y' or 'yp' or 'dE' or 'z') not in df.columns:
-            print('bunch_file_to_dataframe::ERROR: Input dataframe does not contain expected headings')
-            exit(0)
-    
-    particles = sio.loadmat(file, squeeze_me=True, struct_as_record=False)['particles']
-    n_part = len(particles.x)
-    test = file[-11]
-    if test == '-':
-        turn = int(-1)
-    else:
-        turn = int(file[-10:-4])
-    
-    if turn not in df.turn.values:
-        for i in range(0,n_part,1):  
-            # Note we put this into a dataframe initially to maintain datatypes
-            data = pd.DataFrame(
-            {'turn': int(turn),
-            'id': int(i),
-            'x' : particles.x[i],
-            'xp': particles.xp[i],
-            'y' : particles.y[i],
-            'yp': particles.yp[i],
-            'z' : particles.z[i],
-            'dE': particles.dE[i]},
-            index=[0])
-            df = df.append(data, ignore_index=True)
-    
-    return df
-
-########################################################################
-# List of PyORBIT Matfile bunches to pandas dataframe
-########################################################################
-def bunch_files_to_dataframe(file_list, input_dataframe=None):
-    
-    if input_dataframe== None:
-        df = pd.DataFrame({'turn': pd.Series([], dtype='int'),
-                   'id': pd.Series([], dtype='int'),
-                   'x': pd.Series([], dtype='float'),
-                   'xp': pd.Series([], dtype='float'),
-                   'y': pd.Series([], dtype='float'),
-                   'yp': pd.Series([], dtype='float'),
-                   'z': pd.Series([], dtype='float'),
-                   'dE': pd.Series([], dtype='float')})
-        
-    else:
-        df = input_dataframe
-        if 'turn' or 'id' or 'x' or 'xp' or 'y' or 'yp' or 'dE' or 'z' not in df.columns:
-            print('bunch_files_to_dataframe::ERROR: Input dataframe does not contain expected headings')
-            exit(0)
-        
-    for file in file_list:
-        df = bunch_file_to_dataframe(file, df)
-    
-    return df
 
 ########################################################################
 # Read PTC Twiss and return dictionary of columns/values
@@ -324,28 +223,37 @@ def plot_lattice_elements(ax, twiss_in, suppress_x=True):
     for i in idx:
         ax.add_patch(Rectangle((pos[i], -0.5), width = 0.1, height = 1., angle=0.0, ec='k', fc='k', lw=0.0))
     
-    # BENDS - red centred rectangles   
+    # BENDS - blue centred rectangles   
     idx = np.array([idx for idx, elem in enumerate(twiss.KEYWORD.values) if 'BEND' in elem])
     for i in idx:
-        ax.add_patch(Rectangle((pos[i], -0.5), width = lengths[i], height = 1., angle=0.0, ec='k', fc='r', lw=0.0))
+        ax.add_patch(Rectangle((pos[i], -0.5), width = lengths[i], height = 1., angle=0.0, ec='k', fc='b', lw=0.0))
     
     # Kickers - cyan centred rectangles 
     idx = np.array([idx for idx, elem in enumerate(twiss.KEYWORD.values) if 'HKICKER' in elem])
     for i in idx:
-        ax.add_patch(Rectangle((pos[i], -0.5), width = lengths[i], height = 1., angle=0.0, ec='k', fc='c', lw=0.0))
+        ax.add_patch(Rectangle((pos[i], -0.5), width = 0.1, height = 1., angle=0.0, ec='k', fc='c', lw=0.0))
     idx = np.array([idx for idx, elem in enumerate(twiss.KEYWORD.values) if 'VKICKER' in elem])       
     for i in idx:
-        ax.add_patch(Rectangle((pos[i], -0.5), width = lengths[i], height = 1., angle=0.0, ec='k', fc='c', lw=0.0))
+        ax.add_patch(Rectangle((pos[i], -0.5), width = 0.1, height = 1., angle=0.0, ec='k', fc='c', lw=0.0))
               
-    # QUADRUPOLES - blue offset rectangles indicating Focussing or Defocussing
+    # QUADRUPOLES - red offset rectangles indicating Focussing or Defocussing
     idx = np.array([idx for idx, elem in enumerate(twiss.KEYWORD.values) if 'QUADRUPOLE' in elem])
     name = np.array(twiss.NAME.values)[idx]
-    if (twissHeader['SEQUENCE'] == 'SYNCHROTRON'):
+    if (twissHeader['SEQUENCE'] == 'SYNCHROTRON'):        
         idx_1 = idx[np.array([i for i, n in enumerate(name) if 'QD' in n])]
         idx_2 = idx[np.array([i for i, n in enumerate(name) if 'QF' in n])]
+        
+    elif (twissHeader['SEQUENCE'] == 'RING'):    
+        idx_1 = idx[np.array([i for i, n in enumerate(name) if (n.startswith('D') or 'QTD' in n)])]
+        idx_2 = idx[np.array([i for i, n in enumerate(name) if (n.startswith('F') or 'QTF' in n)])]
+        
+    else: 
+        idx_1 = idx[np.array([i for i, n in enumerate(name) if 'D' in n ])]
+        idx_2 = idx[np.array([i for i, n in enumerate(name) if 'F' in n ])]        
+        
     offset = [-0.5, 0.5]
     for i in idx_1:
-        ax.add_patch(Rectangle((pos[i], (-0.5 + offset[0])), width = lengths[i], height = 1., angle=0.0, ec='k', fc='b', lw=0.0))
+        ax.add_patch(Rectangle((pos[i], (-0.5 + offset[0])), width = lengths[i], height = 1., angle=0.0, ec='k', fc='r', lw=0.0))
     for i in idx_2:
-        ax.add_patch(Rectangle((pos[i], (-0.5 + offset[1])), width = lengths[i], height = 1., angle=0.0, ec='k', fc='b', lw=0.0))
+        ax.add_patch(Rectangle((pos[i], (-0.5 + offset[1])), width = lengths[i], height = 1., angle=0.0, ec='k', fc='r', lw=0.0))
    
