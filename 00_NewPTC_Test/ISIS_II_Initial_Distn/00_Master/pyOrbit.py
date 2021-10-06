@@ -125,7 +125,7 @@ Lattice.readPTC(PTC_File)
 print '\n\t\tRead PTC files on MPI process: ', rank
 CheckAndReadPTCFile('PTC/fringe.ptc')
 CheckAndReadPTCFile('PTC/time.ptc')
-CheckAndReadPTCFile('PTC/ramp_cavities.ptc')
+#CheckAndReadPTCFile('PTC/ramp_cavities.ptc')
 
 # Create a dictionary of parameters
 #-----------------------------------------------------------------------
@@ -147,63 +147,69 @@ for node in Lattice.getNodes():
 # Import a bunch and relevant parameters for it
 #-----------------------------------------------------------------------
 if sts['turn'] < 0:
-	print '\n\t\tCreate bunch on MPI process: ', rank
-	bunch = Bunch()
-	setBunchParamsPTC(bunch)
+    print '\n\t\tCreate bunch on MPI process: ', rank
+    bunch = Bunch()
+    setBunchParamsPTC(bunch)
 
-	p['harmonic_number'] = Lattice.nHarm
-	p['phi_s']           = 0
-	p['gamma']           = bunch.getSyncParticle().gamma()
-	p['beta']            = bunch.getSyncParticle().beta()
-        print '\n\tBETA = ', bunch.getSyncParticle().beta()
-        print '\n\tGAMMA = ', bunch.getSyncParticle().gamma()
-	p['energy']          = 1e9 * bunch.mass() * bunch.getSyncParticle().gamma()
-	# ~ p['bunch_length'] = p['sig_z']/speed_of_light/bunch.getSyncParticle().beta()*4
-	p['bunch_length'] = p['bunch_length']
-	# ~ kin_Energy = bunch.getSyncParticle().kinEnergy()
+    p['harmonic_number'] = Lattice.nHarm
+    p['phi_s']           = 0
+    p['gamma']           = bunch.getSyncParticle().gamma()
+    p['beta']            = bunch.getSyncParticle().beta()    
+    p['energy']          = 1e9 * bunch.mass() * bunch.getSyncParticle().gamma()
+    # ~ p['bunch_length'] = p['sig_z']/speed_of_light/bunch.getSyncParticle().beta()*4
+    p['bunch_length'] = p['bunch_length']
+    # ~ kin_Energy = bunch.getSyncParticle().kinEnergy()    
+    
+    print '\n\tBETA = ', p['beta']
+    print '\n\tGAMMA = ', p['gamma']
+    print '\n\tENERGY = ', p['energy']
+    print '\n\tBUNCHLENGTH = ', p['bunch_length']
 
-	print '\n\t\tOutput simulation_parameters on MPI process: ', rank
-	for i in p:
-		print '\t', i, '\t = \t', p[i]
+    print '\n\t\tOutput simulation_parameters on MPI process: ', rank
+    for i in p:
+        print '\t', i, '\t = \t', p[i]
 
-	if s['Horizontal']:
-		Particle_distribution_file = generate_initial_poincare_distributionH(p['InitialDistnSigma'], p, Lattice, output_file='input/ParticleDistribution.in', summary_file='input/ParticleDistribution_summary.txt')
-	else:
-		Particle_distribution_file = generate_initial_poincare_distributionV(p['InitialDistnSigma'], p, Lattice, output_file='input/ParticleDistribution.in', summary_file='input/ParticleDistribution_summary.txt')
-	
-	print '\nbunch_orbit_to_pyorbit on MPI process: ', rank
-	bunch_orbit_to_pyorbit(paramsDict["length"], bunch.getSyncParticle().kinEnergy(), Particle_distribution_file, bunch, p['n_macroparticles'] + 1) #read in only first N_mp particles.
+    if s['Gaussian']:
+        Particle_distribution_file = generate_initial_distribution_3DGaussian(p, Lattice, output_file = 'input/ParticleDistribution.in', summary_file = 'input/ParticleDistribution_summary.txt')
+    else:
+        if s['Horizontal']:
+            Particle_distribution_file = generate_initial_poincare_distributionH(p['InitialDistnSigma'], p, Lattice)
+        else:
+            Particle_distribution_file = generate_initial_poincare_distributionV(p['InitialDistnSigma'], p, Lattice)
+        
+    print '\nbunch_orbit_to_pyorbit on MPI process: ', rank
+    bunch_orbit_to_pyorbit(paramsDict["length"], bunch.getSyncParticle().kinEnergy(), Particle_distribution_file, bunch, p['n_macroparticles'] + 1) #read in only first N_mp particles.
 
-# Add Macrosize to bunch
-#-----------------------------------------------------------------------
-	bunch.addPartAttr("macrosize")
-	map(lambda i: bunch.partAttrValue("macrosize", i, 0, p['macrosize']), range(bunch.getSize()))
-	ParticleIdNumber().addParticleIdNumbers(bunch) # Give them unique number IDs
+    # Add Macrosize to bunch
+    #-----------------------------------------------------------------------
+    bunch.addPartAttr("macrosize")
+    map(lambda i: bunch.partAttrValue("macrosize", i, 0, p['macrosize']), range(bunch.getSize()))
+    ParticleIdNumber().addParticleIdNumbers(bunch) # Give them unique number IDs
 
-# Dump and save as Matfile
-#-----------------------------------------------------------------------
-	# ~ bunch.dumpBunch("input/mainbunch_start.dat")
-	print '\n\t\tSave bunch in bunch_output/mainbunch_-000001.mat on MPI process: ', rank
-	saveBunchAsMatfile(bunch, "bunch_output/mainbunch_-000001")
-	print '\n\t\tSave bunch in input/mainbunch.mat on MPI process: ', rank
-	saveBunchAsMatfile(bunch, "input/mainbunch")
-	sts['mainbunch_file'] = "input/mainbunch"
+    # Dump and save as Matfile
+    #-----------------------------------------------------------------------
+    # ~ bunch.dumpBunch("input/mainbunch_start.dat")
+    print '\n\t\tSave bunch in bunch_output/mainbunch_-000001.mat on MPI process: ', rank
+    saveBunchAsMatfile(bunch, "bunch_output/mainbunch_-000001")
+    print '\n\t\tSave bunch in input/mainbunch.mat on MPI process: ', rank
+    saveBunchAsMatfile(bunch, "input/mainbunch")
+    sts['mainbunch_file'] = "input/mainbunch"
 
-# Create empty lost bunch
-#-----------------------------------------------------------------------
-	lostbunch = Bunch()
-	bunch.copyEmptyBunchTo(lostbunch)
-	lostbunch.addPartAttr('ParticlePhaseAttributes')
-	lostbunch.addPartAttr("LostParticleAttributes")	
-	saveBunchAsMatfile(lostbunch, "input/lostbunch")
-	sts['lostbunch_file'] = "input/lostbunch"
+    # Create empty lost bunch
+    #-----------------------------------------------------------------------
+    lostbunch = Bunch()
+    bunch.copyEmptyBunchTo(lostbunch)
+    lostbunch.addPartAttr('ParticlePhaseAttributes')
+    lostbunch.addPartAttr("LostParticleAttributes")	
+    saveBunchAsMatfile(lostbunch, "input/lostbunch")
+    sts['lostbunch_file'] = "input/lostbunch"
 
-# Add items to pickle parameters
-#-----------------------------------------------------------------------
-	sts['turns_max'] = p['turns_max']
-	sts['turns_update'] = p['turns_update']
-	sts['turns_print'] = p['turns_print']
-	sts['circumference'] = p['circumference']
+    # Add items to pickle parameters
+    #-----------------------------------------------------------------------
+    sts['turns_max'] = p['turns_max']
+    sts['turns_update'] = p['turns_update']
+    sts['turns_print'] = p['turns_print']
+    sts['circumference'] = p['circumference']
 
 bunch = bunch_from_matfile(sts['mainbunch_file'])
 lostbunch = bunch_from_matfile(sts['lostbunch_file'])
@@ -212,8 +218,9 @@ paramsDict["bunch"]= bunch
 
 # ParticleOutputDictionary for poincare sections instead of dumping bunch files
 #-----------------------------------------------------------------------
-particleDictionary = ParticleOutputDictionary()
-particleDictionary.AddNParticles(p['n_macroparticles'])
+if not s['Gaussian']:
+    particleDictionary = ParticleOutputDictionary()
+    particleDictionary.AddNParticles(p['n_macroparticles'])
 
 
 # Add tune analysis child node
@@ -339,7 +346,8 @@ print "p['n_macroparticles'] = ", p['n_macroparticles']
 
 for i in range(0, p['n_macroparticles'],1):
 	print bunch.x(i)
-particleDictionary.Update(bunch, turn, verbose=True)
+if not s['Gaussian']:
+    particleDictionary.Update(bunch, turn, verbose=True)
 
 if os.path.exists(output_file):
 	output.import_from_matfile(output_file)
@@ -368,7 +376,7 @@ for turn in range(sts['turn']+1, sts['turns_max']):
 	if turn in sts['turns_update']:	sts['turn'] = turn
 
 	output.update()
-	particleDictionary.Update(bunch, turn)
+	if not s['Gaussian']: particleDictionary.Update(bunch, turn)
 
 	if turn in sts['turns_print']:
 		# ~ saveBunchAsMatfile(bunch, "input/mainbunch")
@@ -379,4 +387,4 @@ for turn in range(sts['turn']+1, sts['turns_max']):
 			with open(status_file, 'w') as fid:
 				pickle.dump(sts, fid)
 				
-particleDictionary.PrintAllParticles('Poincare.dat')
+if not s['Gaussian']: particleDictionary.PrintAllParticles('Poincare.dat')

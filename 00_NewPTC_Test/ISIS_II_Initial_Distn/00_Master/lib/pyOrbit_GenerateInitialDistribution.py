@@ -578,6 +578,10 @@ def generate_initial_distribution_3DGaussian(parameters, Lattice, output_file = 
 	h_main = np.atleast_1d(parameters['harmonic_number'])[0]
 	R = parameters['circumference'] / 2 / np.pi
 	sig_E = (parameters['dpp_rms'] * parameters['energy'] * parameters['beta']**2)
+    
+	# Take RMS bunch length as total bunch length / 10
+	# Assuming bunch length covers +/- 5 sigma
+	parameters['blength_rms'] = parameters['bunch_length'] / 10.
 
 	if orbit_mpi.MPI_Comm_rank(orbit_mpi.mpi_comm.MPI_COMM_WORLD) == 0:
 		fid = open(output_file,"w")
@@ -589,14 +593,14 @@ def generate_initial_distribution_3DGaussian(parameters, Lattice, output_file = 
 			outside_limits_E = True
 			while outside_limits_E:
 				dE[i] = random.gauss(0., sig_E)	# Energy in eV
-				if abs(dE[i]) < (5*sig_E):
+				if abs(dE[i]) < (parameters['LongitudinalCut']*sig_E):
 					print '\n\tdE = ', dE[i]
 					outside_limits_E = False
 			
 			outside_limits_z = True			
 			while outside_limits_z:
 				z_temp = random.gauss(0., parameters['blength_rms'])
-				if abs(z_temp) < (5*parameters['blength_rms']):			
+				if abs(z_temp) < (parameters['LongitudinalCut']*parameters['blength_rms']):			
 					print '\n\tz_temp = ', z_temp		
 					phi[i] = - z_temp * h_main / R 
 					outside_limits_z = False

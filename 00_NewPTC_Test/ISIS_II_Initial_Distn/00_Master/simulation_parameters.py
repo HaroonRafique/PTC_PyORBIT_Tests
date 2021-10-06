@@ -3,21 +3,21 @@ import numpy as np
 
 parameters = {}
 
-parameters['turns_max'] 		= int(1024)
-parameters['n_macroparticles']	= int(21)
+parameters['turns_max'] 		= int(1)
+parameters['n_macroparticles']	= int(1E5)
 parameters['InitialDistnSigma'] = 10.	# Poincare distribution limits in units of sigma
 
 parameters['intensity']			= 1E+13
 parameters['bunch_length']		= 140e-9
-parameters['epsn_x']			= 1E-6
-parameters['epsn_y']			= 1E-6
+parameters['epsn_x']			= 750 * np.pi * 1E-6
+parameters['epsn_y']			= 750 * np.pi * 1E-6
 parameters['dpp_rms']			= 1e-03
 parameters['LongitudinalJohoParameter'] = 1.2
-parameters['LongitudinalCut'] 	        = 2.4
-parameters['TransverseCut']		= 5
+parameters['LongitudinalCut'] 	        = 5.
+parameters['TransverseCut']		= 5.
 parameters['rf_voltage']		= 0.0
-parameters['circumference']		= 2*np.pi*100
-parameters['phi_s']			= 0
+parameters['circumference']		= 163.748686344000
+parameters['phi_s']			    = 0
 parameters['macrosize']			= parameters['intensity']/float(parameters['n_macroparticles'])
 
 # ISIS-II Injection 0.4 GeV
@@ -25,7 +25,7 @@ parameters['gamma']				= 1.426322879896
 parameters['beta'] 	= np.sqrt(parameters['gamma']**2-1)/parameters['gamma']
 print 'beta = ', parameters['beta'] 
 c 			= 299792458
-parameters['sig_z'] 	= (parameters['beta'] * c * parameters['blength'])/4.
+parameters['sig_z'] 	= (parameters['beta'] * c * parameters['bunch_length'])/4.
 
 # Define how often we dump bunch output files
 #-----------------------------------------------------------------------
@@ -36,6 +36,7 @@ parameters['turns_update'] = range(-1, parameters['turns_max'], n_turns) # every
 # Simulation switches
 #-----------------------------------------------------------------------
 switches = {
+    'Gaussian': True, # Gaussian or Poincare (False) distribution
 	'Horizontal': True,   # Initial Poincare distribution in horizontal (true) / vertical (false)
 	'Update_Twiss':	False   # Perform PTC twiss and dump each turn - needed to output tune changes
 }
