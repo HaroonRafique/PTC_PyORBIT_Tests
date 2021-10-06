@@ -954,7 +954,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
    0.0000000000000000        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
- -0.40572721809125228        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
+   0.0000000000000000        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -1744,7 +1744,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
    0.0000000000000000        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
-  0.55386365890104816        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
+   0.0000000000000000        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -1958,7 +1958,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
    0.0000000000000000        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
-  -1.1653514022251581        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
+   0.0000000000000000        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -2598,7 +2598,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
    0.0000000000000000        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
-  0.52460153079678651        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
+   0.0000000000000000        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -4230,7 +4230,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
-  3.48008458719913372E-002   0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+  3.58022430999714592E-002   0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -4837,7 +4837,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           6           7           2  EXACT METHOD NST NMUL
+ T           6           6           2  EXACT METHOD NST NMUL
   0.75000000000000000       0.75000000000000000        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -4859,7 +4859,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
-  0.70836329917986396        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+  0.64899573549094747        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -4943,7 +4943,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           4           5           2  EXACT METHOD NST NMUL
+ T           4           2           2  EXACT METHOD NST NMUL
   0.20000000000000001       0.20000000000000001        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -4965,7 +4965,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
- -0.87171372756471788        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+ -0.43328061230823783        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -5101,7 +5101,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           6           3           2  EXACT METHOD NST NMUL
+ T           6           4           2  EXACT METHOD NST NMUL
   0.75000000000000000       0.75000000000000000        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -5123,7 +5123,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
- -0.32032589970246705        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+ -0.37590240075283132        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -6045,7 +6045,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           6           3           2  EXACT METHOD NST NMUL
+ T           6           4           2  EXACT METHOD NST NMUL
   0.75000000000000000       0.75000000000000000        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -6067,7 +6067,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
- -0.32032589970246705        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+ -0.37590240075283132        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -6203,7 +6203,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           4           5           2  EXACT METHOD NST NMUL
+ T           4           2           2  EXACT METHOD NST NMUL
   0.20000000000000001       0.20000000000000001        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -6225,7 +6225,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
- -0.87171372756471788        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+ -0.43328061230823783        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -6309,7 +6309,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           6           7           2  EXACT METHOD NST NMUL
+ T           6           6           2  EXACT METHOD NST NMUL
   0.75000000000000000       0.75000000000000000        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -6331,7 +6331,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
-  0.70836329917986396        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+  0.64899573549094747        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -7067,7 +7067,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
-  3.48008458719913372E-002   0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+  3.58022430999714592E-002   0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -8123,7 +8123,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
    0.0000000000000000        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
- -0.40572721809125228        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
+   0.0000000000000000        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -8913,7 +8913,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
    0.0000000000000000        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
-  0.55386365890104816        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
+   0.0000000000000000        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -9127,7 +9127,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
    0.0000000000000000        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
-  -1.1653514022251581        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
+   0.0000000000000000        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -9767,7 +9767,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
    0.0000000000000000        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
-  0.52460153079678651        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
+   0.0000000000000000        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -11399,7 +11399,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
-  3.48008458719913372E-002   0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+  3.58022430999714592E-002   0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -12006,7 +12006,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           6           7           2  EXACT METHOD NST NMUL
+ T           6           6           2  EXACT METHOD NST NMUL
   0.75000000000000000       0.75000000000000000        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -12028,7 +12028,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
-  0.70836329917986396        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+  0.64899573549094747        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -12112,7 +12112,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           4           5           2  EXACT METHOD NST NMUL
+ T           4           2           2  EXACT METHOD NST NMUL
   0.20000000000000001       0.20000000000000001        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -12134,7 +12134,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
- -0.87171372756471788        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+ -0.43328061230823783        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -12270,7 +12270,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           6           3           2  EXACT METHOD NST NMUL
+ T           6           4           2  EXACT METHOD NST NMUL
   0.75000000000000000       0.75000000000000000        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -12292,7 +12292,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
- -0.32032589970246705        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+ -0.37590240075283132        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -13214,7 +13214,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           6           3           2  EXACT METHOD NST NMUL
+ T           6           4           2  EXACT METHOD NST NMUL
   0.75000000000000000       0.75000000000000000        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -13236,7 +13236,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
- -0.32032589970246705        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+ -0.37590240075283132        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -13372,7 +13372,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           4           5           2  EXACT METHOD NST NMUL
+ T           4           2           2  EXACT METHOD NST NMUL
   0.20000000000000001       0.20000000000000001        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -13394,7 +13394,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
- -0.87171372756471788        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+ -0.43328061230823783        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -13478,7 +13478,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           6           7           2  EXACT METHOD NST NMUL
+ T           6           6           2  EXACT METHOD NST NMUL
   0.75000000000000000       0.75000000000000000        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -13500,7 +13500,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
-  0.70836329917986396        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+  0.64899573549094747        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -14236,7 +14236,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
-  3.48008458719913372E-002   0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+  3.58022430999714592E-002   0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -15292,7 +15292,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
    0.0000000000000000        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
- -0.40572721809125228        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
+   0.0000000000000000        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -16082,7 +16082,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
    0.0000000000000000        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
-  0.55386365890104816        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
+   0.0000000000000000        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -16296,7 +16296,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
    0.0000000000000000        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
-  -1.1653514022251581        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
+   0.0000000000000000        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -16936,7 +16936,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
    0.0000000000000000        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
-  0.52460153079678651        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
+   0.0000000000000000        0.0000000000000000                1   BN AN %f            3                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -18568,7 +18568,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
-  3.48008458719913372E-002   0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+  3.58022430999714592E-002   0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -19175,7 +19175,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           6           7           2  EXACT METHOD NST NMUL
+ T           6           6           2  EXACT METHOD NST NMUL
   0.75000000000000000       0.75000000000000000        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -19197,7 +19197,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
-  0.70836329917986396        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+  0.64899573549094747        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -19281,7 +19281,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           4           5           2  EXACT METHOD NST NMUL
+ T           4           2           2  EXACT METHOD NST NMUL
   0.20000000000000001       0.20000000000000001        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -19303,7 +19303,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
- -0.87171372756471788        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+ -0.43328061230823783        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -19439,7 +19439,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           6           3           2  EXACT METHOD NST NMUL
+ T           6           4           2  EXACT METHOD NST NMUL
   0.75000000000000000       0.75000000000000000        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -19461,7 +19461,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
- -0.32032589970246705        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+ -0.37590240075283132        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -20383,7 +20383,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           6           3           2  EXACT METHOD NST NMUL
+ T           6           4           2  EXACT METHOD NST NMUL
   0.75000000000000000       0.75000000000000000        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -20405,7 +20405,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
- -0.32032589970246705        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+ -0.37590240075283132        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -20541,7 +20541,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           4           5           2  EXACT METHOD NST NMUL
+ T           4           2           2  EXACT METHOD NST NMUL
   0.20000000000000001       0.20000000000000001        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -20563,7 +20563,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
- -0.87171372756471788        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+ -0.43328061230823783        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -20647,7 +20647,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
   NO ELECTRIC ELEMENT INFORMATION 
   NO_SOLENOID_PRESENT    0.0000000000000000       SADISTIC
  MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART MAGNET CHART 
- T           6           7           2  EXACT METHOD NST NMUL
+ T           6           6           2  EXACT METHOD NST NMUL
   0.75000000000000000       0.75000000000000000        0.0000000000000000       TILT=    0.0000000000000000       LD LC B0                                                                              
   0.71305949691096093       0.70110352578280988       0.96674684949607148       0.95427251261067680       BETA0 GAMMA0I GAMBET P0C                                                                      
    0.0000000000000000        0.0000000000000000       EDGES
@@ -20669,7 +20669,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
-  0.70836329917986396        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+  0.64899573549094747        0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@
@@ -21405,7 +21405,7 @@ END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME END MAGNET FRAME
  NO MAGNET APERTURE 
 END MAGNET CHART END MAGNET CHART END MAGNET CHART END MAGNET CHART 
    0.0000000000000000        0.0000000000000000                1   BN AN %f            1                                                                                                                                                                       
-  3.48008458719913372E-002   0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
+  3.58022430999714592E-002   0.0000000000000000                1   BN AN %f            2                                                                                                                                                                       
  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   END   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   @@@@@@@@@@@@@@@@@@@@  END  @@@@@@@@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@@@@ FIBRE @@@@@@@@@@@@@@@@@@@@

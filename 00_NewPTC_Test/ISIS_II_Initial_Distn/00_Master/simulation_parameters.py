@@ -3,14 +3,14 @@ import numpy as np
 
 parameters = {}
 
-parameters['turns_max'] 		= int(1)
+parameters['turns_max'] 		= int(3)
 parameters['n_macroparticles']	= int(1E5)
 parameters['InitialDistnSigma'] = 10.	# Poincare distribution limits in units of sigma
 
 parameters['intensity']			= 1E+13
 parameters['bunch_length']		= 140e-9
-parameters['epsn_x']			= 750 * np.pi * 1E-6
-parameters['epsn_y']			= 750 * np.pi * 1E-6
+parameters['epsn_x']			= 1E-3# 400 * np.pi * 1E-6 / 6. # 99% emittance 400 pi mm mrad -> Assume to be 6 sigma wide
+parameters['epsn_y']			= 1E-3#400 * np.pi * 1E-6 / 6.
 parameters['dpp_rms']			= 1e-03
 parameters['LongitudinalJohoParameter'] = 1.2
 parameters['LongitudinalCut'] 	        = 5.

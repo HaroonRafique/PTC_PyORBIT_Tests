@@ -379,10 +379,10 @@ for turn in range(sts['turn']+1, sts['turns_max']):
 	if not s['Gaussian']: particleDictionary.Update(bunch, turn)
 
 	if turn in sts['turns_print']:
-		# ~ saveBunchAsMatfile(bunch, "input/mainbunch")
-		# ~ saveBunchAsMatfile(bunch, "bunch_output/mainbunch_%s"%(str(turn).zfill(6)))
-		# ~ saveBunchAsMatfile(lostbunch, "lost/lostbunch_%s"%(str(turn).zfill(6)))
-		# ~ output.save_to_matfile(output_file)
+		saveBunchAsMatfile(bunch, "input/mainbunch")
+		saveBunchAsMatfile(bunch, "bunch_output/mainbunch_%s"%(str(turn).zfill(6)))
+		saveBunchAsMatfile(lostbunch, "lost/lostbunch_%s"%(str(turn).zfill(6)))
+		output.save_to_matfile(output_file)
 		if not rank:
 			with open(status_file, 'w') as fid:
 				pickle.dump(sts, fid)
