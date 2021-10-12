@@ -118,7 +118,8 @@ write_RFtable('input/RF_table.ptc', *[RF[k] for k in ['harmonic_factors','time',
 # Initialize a Teapot-Style PTC lattice
 #-----------------------------------------------------------------------
 print '\n\t\tRead PTC flat file: on MPI process: ', rank
-PTC_File = 'ISIS_II_EH_RCS_PTC_flat_file.flt'
+#PTC_File = 'ISIS_II_EH_RCS_PTC_flat_file.flt' #Newer MADX 5.06.01
+PTC_File = 'ISIS_II_EH_RCS_PTC_flat_file_madx_502.flt'
 Lattice = PTC_Lattice("PS")
 Lattice.readPTC(PTC_File)
 
@@ -178,7 +179,7 @@ if sts['turn'] < 0:
             Particle_distribution_file = generate_initial_poincare_distributionV(p['InitialDistnSigma'], p, Lattice)
         
     print '\nbunch_orbit_to_pyorbit on MPI process: ', rank
-    bunch_orbit_to_pyorbit(paramsDict["length"], bunch.getSyncParticle().kinEnergy(), Particle_distribution_file, bunch, p['n_macroparticles'] + 1) #read in only first N_mp particles.
+    bunch_orbit_to_pyorbit(paramsDict["length"], bunch.getSyncParticle().kinEnergy(), Particle_distribution_file, bunch, p['n_macroparticles']) #read in only first N_mp particles.
 
     # Add Macrosize to bunch
     #-----------------------------------------------------------------------
@@ -344,10 +345,10 @@ output.update()
 
 print "p['n_macroparticles'] = ", p['n_macroparticles']
 
-for i in range(0, p['n_macroparticles'],1):
-	print bunch.x(i)
+# ~ for i in range(0, p['n_macroparticles'],1):
+	# ~ print bunch.x(i)
 if not s['Gaussian']:
-    particleDictionary.Update(bunch, turn, verbose=True)
+    particleDictionary.Update(bunch, turn, verbose=False)
 
 if os.path.exists(output_file):
 	output.import_from_matfile(output_file)

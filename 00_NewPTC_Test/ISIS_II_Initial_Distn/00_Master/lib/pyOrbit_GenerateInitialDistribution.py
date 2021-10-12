@@ -594,14 +594,14 @@ def generate_initial_distribution_3DGaussian(parameters, Lattice, output_file = 
 			while outside_limits_E:
 				dE[i] = random.gauss(0., sig_E)	# Energy in eV
 				if abs(dE[i]) < (parameters['LongitudinalCut']*sig_E):
-					print '\n\tdE = ', dE[i]
+					#print '\n\tdE = ', dE[i]
 					outside_limits_E = False
 			
 			outside_limits_z = True			
 			while outside_limits_z:
 				z_temp = random.gauss(0., parameters['blength_rms'])
 				if abs(z_temp) < (parameters['LongitudinalCut']*parameters['blength_rms']):			
-					print '\n\tz_temp = ', z_temp		
+					#print '\n\tz_temp = ', z_temp		
 					phi[i] = - z_temp * h_main / R 
 					outside_limits_z = False
 							
@@ -623,9 +623,9 @@ def generate_initial_distribution_3DGaussian(parameters, Lattice, output_file = 
 				yp[i] *= 1000
 				dE[i] /= 1.e9		
 				csv_writer.writerow([x[i], xp[i], y[i], yp[i], phi[i], dE[i]])
-		#	else:
+            #else:
 				# still need to convert from phi to z!!
-				#csv_writer.writerow([x[i], xp[i], y[i], yp[i], z[i], dE[i]])		
+				 #csv_writer.writerow([x[i], xp[i], y[i], yp[i], z[i], dE[i]])		
 		fid.close()
 
 		fid = open(summary_file, 'w')
