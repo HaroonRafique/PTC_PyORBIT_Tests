@@ -179,7 +179,7 @@ if sts['turn'] < 0:
             Particle_distribution_file = generate_initial_poincare_distributionV(p['InitialDistnSigma'], p, Lattice)
         
     print '\nbunch_orbit_to_pyorbit on MPI process: ', rank
-    bunch_orbit_to_pyorbit(paramsDict["length"], bunch.getSyncParticle().kinEnergy(), Particle_distribution_file, bunch, p['n_macroparticles']) #read in only first N_mp particles.
+    bunch_orbit_to_pyorbit(paramsDict["length"], bunch.getSyncParticle().kinEnergy(), Particle_distribution_file, bunch, p['n_macroparticles']+1) #read in only first N_mp particles.
 
     # Add Macrosize to bunch
     #-----------------------------------------------------------------------
