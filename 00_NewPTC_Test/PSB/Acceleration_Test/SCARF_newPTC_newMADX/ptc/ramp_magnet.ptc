@@ -1,0 +1,114 @@
+SET ORBIT RAMPING
+ramp
+BI1.BSW1L1.1   "./Tables/BI1.BSW1L1.1.dat"  1
+ramp
+BI1.BSW1L1.2   "./Tables/BI1.BSW1L1.2.dat"  1
+ramp
+BI1.BSW1L1.3   "./Tables/BI1.BSW1L1.3.dat"  1
+ramp
+BI1.BSW1L1.4   "./Tables/BI1.BSW1L1.4.dat"  1
+ramp
+BI1.KSW1L4    "./Tables/KSW.1L4.dat"        1
+ramp
+BI1.KSW2L1    "./Tables/KSW.2L1.dat"        1
+ramp
+BI1.KSW16L1   "./Tables/KSW.16L1.dat"       1
+ramp
+BI1.KSW16L4    "./Tables/KSW.16L4.dat"      1  
+ramp
+BR.QFO11     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE1      "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO12     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO21     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE2      "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO22     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO31     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE3      "./Tables/QDE3_CompAll.dat"    1
+ramp
+BR.QFO32     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO41     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE4      "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO42     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO51     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE5      "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO52     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO61     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE6      "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO62     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO71     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE7      "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO72     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO81     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE8      "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO82     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO91     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE9      "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO92     "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO101    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE10     "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO102    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO111    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE11     "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO112    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO121    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE12     "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO122    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO131    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE13     "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO132    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO141    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE14     "./Tables/QDE14_CompAll.dat"   1
+ramp
+BR.QFO142    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO151    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE15     "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO152    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QFO161    "./Tables/QFOstd_CompAll.dat"  1
+ramp
+BR.QDE16     "./Tables/QDEstd_CompAll.dat"  1
+ramp
+BR.QFO162    "./Tables/QFOstd_CompAll.dat"  1
+return

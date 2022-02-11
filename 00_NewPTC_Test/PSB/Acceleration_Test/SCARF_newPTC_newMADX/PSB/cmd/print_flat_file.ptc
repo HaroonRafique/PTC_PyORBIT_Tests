@@ -1,0 +1,7 @@
+SELECTLAYOUT
+1
+LMAX
+1.0
+PRINT FLAT FILE
+PTC-PyORBIT_flat_file.flt
+return
