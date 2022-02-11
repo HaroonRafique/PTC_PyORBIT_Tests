@@ -1,0 +1,109 @@
+
+/******************************************************************************************
+ *
+ * MAD-X File for PS Booster optics injection calculations
+ *
+ * Working point for injection : QX = 4.28 and QY = 4.45.
+ *
+ * This file is for protons at 0.311 GeV/c
+ *
+ * Execute with:  >madx < psb_injection.madx
+ *
+ ******************************************************************************************/
+
+ title, 'BOOSTER injection';
+
+ option, echo;
+ option, RBARC=FALSE;
+
+/******************************************************************************************
+ * BOOSTER
+ ******************************************************************************************/
+ call, file = '../elements/psb.ele';
+ call, file = '../sequence/psb.seq';
+ call, file = '../aperture/psb.dbx';
+ call, file = '../strength/psb_orbit.str' ;
+ call, file = '../strength/psb_injection.str';
+
+!save, sequence=psb1, file=psb1.save;
+
+/******************************************************************************************
+ * beam, use
+ ******************************************************************************************/
+
+call, file = '../beam/psb_injection.beamx';
+
+use, sequence=psb1;
+
+set,  format="20.10f";
+set,  format="10.05f";
+
+/******************************************************************************************
+ * Match for new working point
+ ******************************************************************************************/
+
+MATCH,sequence=psb1;
+ vary, NAME=kKF, step = 0.0001;
+ vary, NAME=kKD, step = 0.0001;
+ constraint, range=#E, MUX=4.28, MUY=4.45;
+ lmdif, calls = 10000, tolerance = 1.0E-21;
+ENDMATCH;
+
+! Print results on file: match_injection.prt
+assign, echo="../output/match_injection.prt";
+print, text="match_injection";
+value,  kKF;
+value,  kKD;
+assign, echo=terminal;
+
+/******************************************************************************************
+ * TWISS
+ ******************************************************************************************/
+
+PSHIFT=0;
+
+/************************************************************
+ * MAD uses pt as the 5th variable NOT delta-p.
+ * The result is that all derivatives are with repect to pt.
+ * This is the reason for the non-standard dispersion values
+ * for non-relativistic machines, like the PSB
+ * Ax and Ay are the apertures in number of sigmas
+ ************************************************************/
+ beta=sqrt(1-1/beam->gamma^2);
+ disp:=beta*table(twiss,dx); ! Delta_x=disp*Delta_p/p;
+!hx:=table(twiss,aper_1);
+ hx := (table(twiss,aper_1)+table(twiss,aper_3)-abs(table(twiss,aper_1)-table(twiss,aper_3)))/2; ! MIN( aper_1, aper_3)
+ hy := (table(twiss,aper_2)+table(twiss,aper_4)-abs(table(twiss,aper_2)-table(twiss,aper_4)))/2; ! MIN( aper_2, aper_4)
+ sx := SQRT(table(twiss,betx)*beam->ex);
+ sy := SQRT(table(twiss,bety)*beam->ey);
+ option, -warn;
+ Ax := SQRT((hx^2-(3*disp*beam->sige)^2)/(table(twiss,betx)*beam->ex));
+ Ay := SQRT(hy^2/(table(twiss,bety)*beam->ey)); ! There is no dispersion in vertical plane
+ option, warn;
+
+select, flag=twiss, clear;
+select, flag=twiss, column=name, s,x,alfx,alfy,betx,bety,disp,apertype,aper_1,aper_2,aper_3,aper_4,hx,hy,sx,sy,Ax,Ay;
+
+twiss , centre
+      , DELTAP = PSHIFT
+      , table=TWISS
+      , file='../output/output_injection.outx';
+
+value, beam->ex, beam->ey,beam->sige, beam->sigt;
+value,table(TWISS,PSB1$START,betx);
+
+/******************************************************************************************
+ * PLOT
+ ******************************************************************************************/
+
+/* Use >gv psb_injection to plot */
+
+PLOT, table=TWISS, VAXIS=BETX,BETY,HAXIS=S,
+      SPLINE=FALSE, COLOUR=100, RANGE=#S/#E, FILE='../output/psb_injection'
+PLOT, table=TWISS, VAXIS=DISP,HAXIS=S,
+      SPLINE=FALSE, NOVERSION=TRUE, COLOUR=100, RANGE=#S/#E;
+PLOT, table=TWISS, VAXIS=ALFX,ALFY,HAXIS=S,
+      SPLINE=FALSE, NOVERSION=TRUE, COLOUR=100, RANGE=#S/#E;
+
+
+STOP;

@@ -1,0 +1,6 @@
+#
+# DUMMY.txt 
+#
+# (IE) - 30.03.2017
+#
+-just a dummmy file so teh Git project creates the directory

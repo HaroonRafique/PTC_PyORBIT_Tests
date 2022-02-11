@@ -1,0 +1,104 @@
+/******************************************************************************************
+*
+* MAD-X File for PS Booster optics calculations
+*
+*
+* PSB Extraction working point:
+* New working point: QX = 4.172 and QY = 4.23.  21 Dec 2006 O.Berrig
+*
+*
+* This file is for protons at 0.348 GeV/c at time c = 301
+*
+*
+* Execute with:  >madx < psb_orbit.madx
+*
+******************************************************************************************/
+
+ title, 'BOOSTER lattice';
+
+ option, echo;
+ option, RBARC=FALSE;
+
+/******************************************************************************************
+ * BOOSTER
+ ******************************************************************************************/
+ call, file = '../elements/psb.ele';
+ call, file = '../sequence/psb.seq';
+ call, file = '../aperture/psb.dbx';
+ call, file = '../strength/psb_orbit.str';
+
+!save, sequence=psb1, file=psb1.save;
+
+/******************************************************************************************
+ * beam, use
+ ******************************************************************************************/
+call, file = '../beam/psb_orbit.beamx';
+use, sequence=psb3; ! Ring 3
+
+set,  format="20.10f";
+
+/******************************************************************************************
+ * Match for new working point
+ ******************************************************************************************/
+
+MATCH,sequence=psb3;
+ vary, NAME=kKF, step = 0.0001;
+ vary, NAME=kKD, step = 0.0001;
+ constraint, range=#E, MUX=4.172, MUY=4.230;
+ lmdif, calls = 10000, tolerance = 1.0E-21;
+ENDMATCH;
+
+! Print results on file: match_orbit.prt
+assign, echo="../output/match_orbit.prt";
+print, text="match_orbit";
+value,  kKF;
+value,  kKD;
+assign, echo=terminal;
+
+/******************************************************************************************
+ * TWISS
+ ******************************************************************************************/
+
+PSHIFT=0;
+
+/************************************************************
+ * MAD uses pt as the 5th variable NOT delta-p.
+ * The result is that all derivatives are with repect to pt.
+ * This is the reason for the non-standard dispersion values
+ * for non-relativistic machines, like the PSB
+ ************************************************************/
+ beta=sqrt(1-1/beam->gamma^2);
+ disp:=beta*table(twiss,dx); ! Delta_x=Disp*Delta_p/p;
+
+ select, flag=twiss, clear;
+ select, flag=twiss, column=name, s,x,alfx,alfy,betx,bety,disp;
+
+ twiss ,centre
+       , DELTAP = PSHIFT
+       , table=TWISS
+       , file='../output/output_orbit.outx';
+
+!value,table(TWISS,PSB1$START,betx);
+
+!show, BR.BHZ11;
+
+/******************************************************************************************
+ * PLOT
+ ******************************************************************************************/
+
+/* Use >gv psb_orbit.ps to plot */
+
+PLOT, table=TWISS, VAXIS=BETX,BETY,HAXIS=S,
+      SPLINE=FALSE, COLOUR=100, RANGE=#S/#E, FILE='../output/psb_orbit';
+PLOT, table=TWISS, VAXIS=DISP,HAXIS=S,
+      SPLINE=FALSE, NOVERSION=TRUE, COLOUR=100, RANGE=#S/#E;
+PLOT, table=TWISS, VAXIS=ALFX,ALFY,HAXIS=S,
+      SPLINE=FALSE, NOVERSION=TRUE, COLOUR=100, RANGE=#S/#E;
+
+
+/******************************************************************************************
+ * remove: Maxwellian_bend_for_ptc.txt
+ ******************************************************************************************/
+ system,"rm Maxwellian_bend_for_ptc.txt";
+
+STOP;
