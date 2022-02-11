@@ -44,7 +44,7 @@ manual_tasks = 40               # manually change ntasks
 manual_mem_limit = '4000'       # Manually set memory limit
 # ~ manual_constraints = '"[scarf17|scarf18]"'     # select multiple SCARF clusters
 # ~ manual_constraints = 'scarf17'                 # select single SCARF cluster
-manual_constraints = '"Intel"'                 # select intel hardware
+manual_constraints = '"intel"'                 # select intel hardware
 
 # Defaults - can be changed
 output_file_name = 'slurm.%N.%j.out'
