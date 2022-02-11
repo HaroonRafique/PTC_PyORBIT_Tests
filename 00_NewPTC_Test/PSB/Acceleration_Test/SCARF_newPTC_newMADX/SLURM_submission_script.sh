@@ -10,7 +10,7 @@
 
 ml ifort/2018.3.222-GCC-7.3.0-2.30
 BATCH_ROOT_DIR=/home/vol05/scarf1015
-RUN_DIR=/home/HR/Repositories/PTC_PyORBIT_Tests/00_NewPTC_Test/PSB/Acceleration_Test/SCARF_newPTC_newMADX
+RUN_DIR=/work3/isis/scarf1015/PTC_PyORBIT_Tests/00_NewPTC_Test/PSB/Acceleration_Test/SCARF_newPTC_newMADX
 OrigIwd=$(pwd)
 
 # Make an output folder in the root directory to hold SLURM info file

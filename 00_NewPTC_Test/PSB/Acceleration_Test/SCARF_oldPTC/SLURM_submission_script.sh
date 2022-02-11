@@ -2,7 +2,7 @@
 #SBATCH --job-name=OP_Acc
 #SBATCH --output=slurm.%N.%j.out
 #SBATCH --error=slurm.%N.%j.err
-#SBATCH --constraint="Intel"
+#SBATCH --constraint="intel"
 #SBATCH --ntasks=80
 #SBATCH --partition=ibis
 #SBATCH --time=168:00:00
@@ -10,7 +10,7 @@
 
 ml ifort/2018.3.222-GCC-7.3.0-2.30
 BATCH_ROOT_DIR=/home/vol05/scarf1015
-RUN_DIR=/home/HR/Repositories/PTC_PyORBIT_Tests/00_NewPTC_Test/PSB/Acceleration_Test/SCARF_oldPTC
+RUN_DIR=/work3/isis/scarf1015/PTC_PyORBIT_Tests/00_NewPTC_Test/PSB/Acceleration_Test/SCARF_oldPTC
 OrigIwd=$(pwd)
 
 # Make an output folder in the root directory to hold SLURM info file
