@@ -11,8 +11,10 @@ n_macroparticles = 10000
 orbitx0_injection = 0
 orbity0_injection = 0
 macrosize = intensity/float(n_macroparticles)
-turns_max = 250000
-turns_print = range(-1, turns_max, 1000)
+# ~ turns_max = 250000
+turns_max = 250
+# ~ turns_print = range(-1, turns_max, 1000)
+turns_print = range(-1, turns_max, 1)
 turns_injection = np.arange(nturns_accumulation)
 
 particledistribution_directory = 'Distribution_at_injection'

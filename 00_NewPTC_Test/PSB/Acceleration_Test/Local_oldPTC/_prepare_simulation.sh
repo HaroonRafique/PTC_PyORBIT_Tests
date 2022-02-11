@@ -14,7 +14,7 @@ python 001_run_MADX.py
 # the flat file.
 
 ./START_local_CERN_PTC_PyORBIT.sh 002_pyOrbit_prepare_RFtables.py 1
-# generate RF tables and dnergy ramp based on Simon's input files
+# generate RF tables and energy ramp based on Simon's input files
 
 ./START_local_CERN_PTC_PyORBIT.sh 003_pyOrbit_generateDistribution.py 1
 # generates input distrubition without longitudinal painting, 

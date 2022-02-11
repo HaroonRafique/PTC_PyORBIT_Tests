@@ -41,8 +41,8 @@
 @ SYNCH_5          %le    0.0000000000e+00
 @ TITLE            %03s "PSB"
 @ ORIGIN           %22s "MAD-X 5.02.00 Linux 64"
-@ DATE             %08s "06/10/21"
-@ TIME             %08s "10.35.22"
+@ DATE             %08s "11/02/22"
+@ TIME             %08s "10.08.18"
 * NAME                                S                  X               ALFX               ALFY               BETX               BETY               DISP APERTYPE                       APER_1             APER_2             APER_3             APER_4                 HX                 HY                 SX                 SY                 AX                 AY 
 $ %s                                %le                %le                %le                %le                %le                %le                %le %s                                %le                %le                %le                %le                %le                %le                %le                %le                %le                %le 
  "PSB1$START"          0.0000000000e+00   0.0000000000e+00   2.4123512877e-01   3.4411888104e-01   5.8280242338e+00   4.3076319897e+00  -1.3914772282e+00 "CIRCLE"              0.0000000000e+00   0.0000000000e+00   0.0000000000e+00   0.0000000000e+00   0.0000000000e+00   0.0000000000e+00   1.0381207474e-02   6.5178724438e-03               -nan   0.0000000000e+00
