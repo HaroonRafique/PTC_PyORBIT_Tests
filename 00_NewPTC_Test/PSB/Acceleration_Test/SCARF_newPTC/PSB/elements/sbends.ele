@@ -1,0 +1,3 @@
+MBHGC4WP  : SBEND       , L := 1.617696, ANGLE=-TWOPI/32., E1=-TWOPI/64., E2=-TWOPI/64.;  ! Bending magnet , Booster, 4 apertures. Alsthom "Normaux"
+MBHGD4WP  : SBEND       , L := 1.617696, ANGLE=-TWOPI/32., E1=-TWOPI/64., E2=-TWOPI/64.;  ! Bending magnet , Booster ejection, 4 apertures. Alsthom "Speciaux"
+MBHGE4WP  : SBEND       , L := 1.617696, ANGLE=-TWOPI/32., E1=-TWOPI/64., E2=-TWOPI/64.;  ! Bending magnet , Booster injection, 4 apertures. Alsthom "Speciaux" 

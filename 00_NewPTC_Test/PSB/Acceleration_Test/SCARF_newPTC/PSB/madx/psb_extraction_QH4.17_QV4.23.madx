@@ -1,0 +1,128 @@
+/******************************************************************************************
+*
+* MAD-X File for PS Booster optics extraction calculations
+*
+* Working point for extraction : QX = 4.172 and QY = 4.23
+*
+* This file is for protons at 2.14 GeV/c
+*
+* Execute with:  >madx < psb_exrtraction_QH4.17_QV.4.23.madx
+*
+******************************************************************************************/
+
+ title, 'BOOSTER lattice';
+
+ option, echo;
+ option, RBARC=FALSE;
+
+/******************************************************************************************
+ * BOOSTER
+ ******************************************************************************************/
+ call, file = '../elements/psb.ele';
+ call, file = '../sequence/psb.seq';
+ call, file = '../aperture/psb.dbx';
+ call, file = '../strength/psb_orbit.str';
+ call, file = '../strength/psb_extraction.str';
+
+!save, sequence=psb1, file=psb4.save;
+
+/******************************************************************************************
+ * beam, use
+ ******************************************************************************************/
+
+call, file = '../beam/psb_extraction.beamx';
+use, sequence=psb1;
+
+set,  format="20.10f";
+
+/******************************************************************************************
+ * Match for new working point
+ ******************************************************************************************/
+
+MATCH,sequence=psb1;
+ vary, NAME=kKF, step = 0.0001;
+ vary, NAME=kKD, step = 0.0001;
+ constraint, range=#E, MUX=4.172, MUY=4.230;
+ lmdif, calls = 10000, tolerance = 1.0E-21;
+ENDMATCH;
+
+! Print results on file: match_extraction.prt
+assign, echo="../output/match_extraction.prt";
+print, text="match_extraction";
+value,  kKF;
+value,  kKD;
+assign, echo=terminal;
+
+/******************************************************************************************
+ * TWISS
+ ******************************************************************************************/
+
+PSHIFT=0;
+
+/************************************************************
+ * MAD uses pt as the 5th variable NOT delta-p.
+ * The result is that all derivatives are with repect to pt.
+ * This is the reason for the non-standard dispersion values
+ * for non-relativistic machines, like the PSB
+ ************************************************************/
+beta=sqrt(1-1/beam->gamma^2);
+disp:=beta*table(twiss,dx); ! Delta_x=Disp*Delta_p/p;
+
+select, flag=twiss, clear;
+select, flag=twiss, column=name, s, dx, disp;
+
+twiss , centre
+      , DELTAP = PSHIFT
+      , table=TWISS
+      , file='../output/output_extraction.outx';
+
+value,table(TWISS,PSB1$START,betx);
+
+/******************************************************************************************
+ * PLOT
+ ******************************************************************************************/
+
+/* Use >gv psb2010.ps to plot */
+
+PLOT, table=TWISS, VAXIS=BETX,BETY,HAXIS=S,
+      SPLINE=FALSE, COLOUR=100, RANGE=#S/#E, FILE='../output/psb_extraction';
+PLOT, table=TWISS, VAXIS=DISP,HAXIS=S,
+      SPLINE=FALSE, NOVERSION=TRUE, COLOUR=100, RANGE=#S/#E;
+PLOT, table=TWISS, VAXIS=ALFX,ALFY,HAXIS=S,
+      SPLINE=FALSE, NOVERSION=TRUE, COLOUR=100, RANGE=#S/#E;
+
+/******************************************************************************************
+ * PTC
+ ******************************************************************************************/
+
+!--------------------------------------------------------------------------
+! PTC_TWISS
+!
+! This PTC example illustrates the difference of the calculation
+! of dispersion, either according to p or pt (momentum).
+!
+! The dispersions differs with Beta (relativistic): D_p = D_pt*Beta
+!
+! D_pt corresponds to time=true  i.e. according to pt (same result as TWISS)
+! D_p  corresponds to time=false i.e. according to p
+!
+!--------------------------------------------------------------------------
+
+select,flag=ptc_twiss,clear;
+select,flag=ptc_twiss,column=name,s,disp1,disp2;
+
+!- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ptc_create_universe;
+ptc_create_layout,model=2,method=6,time=true,nst=5,exact; ! time = true
+
+ptc_twiss,icase=5,no=1,file='../output/output_extraction_true.outxptc';
+ptc_end;
+
+!- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ptc_create_universe;
+ptc_create_layout,model=2,method=6,time=false,nst=5,exact; ! time = false
+
+ptc_twiss,icase=5,no=1,file='../output/output_extraction_false.outxptc';
+ptc_end;
+
+STOP;
