@@ -1,0 +1,23 @@
+/**********************************************************************************
+*
+* PS Booster
+*
+*          STRENGTH FILE FOR EXTRACTION
+*
+* should be loaded AFTER the psb_orbit.str file in MAD-X (IE - 2017)
+***********************************************************************************/
+
+/****************************************************
+ * Main elements
+ ****************************************************/
+! The angle is negative because the protons
+! have opposite direction compared to the PS.
+! When combining the files from the BOOSTER
+! to the PS, the angle must be negative.
+
+ kB1=-0.19634954;
+
+ kKF=+0.7284993289;   ! QX = 4.172
+ kKD=-0.7432321804;   ! QY = 4.23
+
+return;

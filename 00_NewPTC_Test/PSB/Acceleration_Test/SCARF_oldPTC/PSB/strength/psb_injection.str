@@ -1,0 +1,32 @@
+/**********************************************************************************
+*
+* PS Booster
+*
+*          STRENGTH FILE FOR INJECTION
+*
+* should be loaded AFTER the psb_orbit.str file in MAD-X (IE - 2017)
+***********************************************************************************/
+
+/****************************************************
+ * Main elements
+ ****************************************************/
+! The angle is negative because the protons
+! have opposite direction compared to the PS.
+! When combining the files from the BOOSTER
+! to the PS, the angle must be negative.
+
+ kB1=-0.19634954;
+
+ kKF=+0.7516785735;    ! QX = 4.28 with injection kickers on
+ kKD=-0.7678588828;    ! QY = 4.45 with injection kickers on
+
+/****************************************************
+ * Injection kickers
+ ****************************************************/
+
+kBIKSW1L1  =-1.388504E-02;    !(QX=4.28 QY=4.45)
+kBIKSW1L4  = 2.457933E-03;    !(QX=4.28 QY=4.45)
+kBIKSW2L1  = 6.968606E-03;    !(QX=4.28 QY=4.45)
+kBIKSW16L4 = 1.782675E-02;    !(QX=4.28 QY=4.45)
+
+return;

@@ -1,0 +1,15 @@
+SELECTLAYOUT    
+1
+CUTTING ALGORITHM
+2
+LIMIT FOR CUTTING
+10000 10000
+thin lens =1
+lmax
+1.0d0 ! 1.25d0 !0.25d0 !0.10d0 ! 1.5d0 ! 1.25d0 ! 1.0d0 ! 0.50d0 ! 0.12d0 ! 0.25d0 ! 0.75d0 
+fuzzylmax
+0.10 ! 0.05 ! 0.5 ! 1.25 ! 1.0 ! 0.50 ! 0.12 ! 0.25 ! 0.75 ! 1.0
+THINLENS
+0.1
+
+return

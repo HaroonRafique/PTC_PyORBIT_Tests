@@ -1,0 +1,52 @@
+option, echo;
+
+/****************************************************
+ * H- injection elements
+ ****************************************************/
+
+seqedit, sequence = psb;
+  flatten;
+  remove, element=BI1.BCS1L1;                                
+  flatten;
+endedit;
+
+/*---------------------------------------------------
+ * Chicane Magnets BSW1 - BSW4
+ ---------------------------------------------------*/
+
+BI1.BSW1L1.1 : SBEND, L=0.313, ANGLE=0;
+BI1.BSW1L1.2 : SBEND, L=0.325, ANGLE=0;
+BI1.BSW1L1.3 : SBEND, L=0.325, ANGLE=0;
+BI1.BSW1L1.4 : SBEND, L=0.325, ANGLE=0;
+
+BI1.BSW1L1.1,  APERTYPE=RECTELLIPSE,  APERTURE={0.0715, 0.0313, 0.0715, 0.0478}, APER_OFFSET={-0.0057, 0.0};
+BI1.BSW1L1.2,  APERTYPE=RECTELLIPSE,  APERTURE={0.1100, 0.0313, 0.1100, 0.0573}, APER_OFFSET={-0.0442, 0.0};
+BI1.BSW1L1.3,  APERTYPE=RECTELLIPSE,  APERTURE={0.1100, 0.0313, 0.1100, 0.0573}, APER_OFFSET={-0.0442, 0.0};
+BI1.BSW1L1.4,  APERTYPE=RECTELLIPSE,  APERTURE={0.1100, 0.0313, 0.1100, 0.0573}, APER_OFFSET={-0.0442, 0.0}; 
+
+/*---------------------------------------------------
+ * KSW slow injection kickers, 
+ ---------------------------------------------------*/
+
+BI1.KSW1L4:  SBEND, L:= 0.370; 
+BI1.KSW2L1:  SBEND, L:= 0.370;
+BI1.KSW16L1: SBEND, L:= 0.370;
+BI1.KSW16L4: SBEND, L:= 0.370;
+
+BI1.KSW2L1,  APERTYPE=CIRCLE,  APERTURE={0.060, 0.06, 0.06, 0.06};  
+BI1.KSW16L1, APERTYPE=CIRCLE,  APERTURE={0.060, 0.06, 0.06, 0.06};
+BI1.KSW1L4,  APERTYPE=CIRCLE,  APERTURE={0.060, 0.06, 0.06, 0.06};
+BI1.KSW16L4, APERTYPE=CIRCLE,  APERTURE={0.060, 0.06, 0.06, 0.06};
+
+
+/*---------------------------------------------------
+ * H0/H- dump 
+ ---------------------------------------------------*/
+
+TDIMA		,  L := 0.072;
+BI1.TDI1L1,  APERTYPE=RECTELLIPSE,  APERTURE={0.1298/2, 0.03130, 0.1298/2, 0.095/2.}, APER_OFFSET={0.009, 0.0};
+
+
+
+
+
