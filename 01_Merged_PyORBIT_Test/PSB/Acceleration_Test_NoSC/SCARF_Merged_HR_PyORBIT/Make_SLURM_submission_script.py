@@ -39,7 +39,7 @@ jobname = 'PS_Acc'
 path_to_simulation = os.path.dirname(os.path.realpath(__file__)) # This directory
 
 # Optional - have to use with correct switches
-manual_time = '504:00:00'       # manually set using format 'hours:minutes:seconds'
+manual_time = '168:00:00'       # manually set using format 'hours:minutes:seconds'
 manual_tasks = 80               # manually change ntasks
 manual_mem_limit = '4000'       # Manually set memory limit
 # ~ manual_constraints = '"[scarf17|scarf18]"'     # select multiple SCARF clusters
@@ -65,9 +65,9 @@ if autotask:
                 exit(0)
 else: n_tasks = manual_tasks
 
-time = '504:00:00'
+time = '168:00:00'
 if autotime:
-        time = '504:00:00'
+        time = '168:00:00'
 else: time = manual_time
 
 constraints = ''
