@@ -3,7 +3,7 @@ import sys
 import time
 import orbit_mpi
 import timeit
-import numpy as np
+import numpy
 import scipy.io as sio
 import os
 import pickle
@@ -431,8 +431,8 @@ addTeapotDiagnosticsNodeAsChild(Lattice, parentnode, tunes)
 #-----------------------------------------------------------------------
 print '\n\t\tbunchtwissanalysis on MPI process: ', rank
 bunchtwissanalysis = BunchTwissAnalysis() #Prepare the analysis class that will look at emittances, etc.
-get_dpp = lambda b, bta: np.sqrt(bta.getCorrelation(5,5)) / (b.getSyncParticle().gamma()*b.mass()*b.getSyncParticle().beta()**2)
-get_bunch_length = lambda b, bta: 4 * np.sqrt(bta.getCorrelation(4,4)) / (speed_of_light*b.getSyncParticle().beta())
+get_dpp = lambda b, bta: numpy.sqrt(bta.getCorrelation(5,5)) / (b.getSyncParticle().gamma()*b.mass()*b.getSyncParticle().beta()**2)
+get_bunch_length = lambda b, bta: 4 * numpy.sqrt(bta.getCorrelation(4,4)) / (speed_of_light*b.getSyncParticle().beta())
 get_eps_z = lambda b, bta: 1e9 * 4 * pi * bta.getEmittance(2) / (speed_of_light*b.getSyncParticle().beta())
 
 output_file = 'output/output.mat'
@@ -604,21 +604,21 @@ if not rank:
 	TwissDict = PTC_Twiss.ReturnTwissDict()
 	TurnList = PTC_Twiss.ReturnTurnList()
 
-	colors = matplotlib.cm.rainbow(np.linspace(0, 1, len(TurnList)))
+	colors = matplotlib.cm.rainbow(numpy.linspace(0, 1, len(TurnList)))
 
 	# some gymnastics to avoid plotting offset elements ...
 	roll = 284
-	circumference = 25*2*np.pi
+	circumference = 25*2*numpy.pi
 	s = TwissDict[0]['s']
 	s[roll:] -= circumference
-	s[roll] = np.nan
+	s[roll] = numpy.nan
 	i2plot = range(len(s))
 	for i in [2,3,6,7,569,570,573,574]: i2plot.remove(i) # avoid plotting elements with offset
 
 
 	f, ax = matplotlib.pyplot.subplots()
 	for t in TurnList:
-		ax.plot(s[i2plot], 1e3*np.array(TwissDict[t]['orbit_x'])[i2plot], color=colors[t])
+		ax.plot(s[i2plot], 1e3*numpy.array(TwissDict[t]['orbit_x'])[i2plot], color=colors[t])
 	ax.set_xlabel('s [m]')
 	ax.set_ylabel('horizontal CO (mm)')
         ax.grid(lw=0.5, ls=':');
@@ -633,7 +633,7 @@ if not rank:
 
 	f, ax = matplotlib.pyplot.subplots()
 	for t in TurnList:
-		ax.plot(s[i2plot], np.array(TwissDict[t]['beta_x'])[i2plot], color=colors[t])
+		ax.plot(s[i2plot], numpy.array(TwissDict[t]['beta_x'])[i2plot], color=colors[t])
 	ax.set_xlabel('s [m]')
 	ax.set_ylabel(r'$\beta_x$ [m]')
 	ax.set_ylim(bottom=0)
@@ -644,7 +644,7 @@ if not rank:
 
 	f, ax = matplotlib.pyplot.subplots()
 	for t in TurnList:
-		ax.plot(s[i2plot], np.array(TwissDict[t]['beta_x'])[i2plot], color=colors[t])
+		ax.plot(s[i2plot], numpy.array(TwissDict[t]['beta_x'])[i2plot], color=colors[t])
 	ax.set_xlabel('s [m]')
 	ax.set_ylabel(r'$\beta_y$ [m]')
 	ax.set_ylim(bottom=0)
@@ -655,8 +655,8 @@ if not rank:
 
 	f, ax = matplotlib.pyplot.subplots()
 	for t in TurnList:
-		beta_y_ref = np.array(TwissDict[TurnList[-1]]['beta_y'])
-		beta_y = np.array(TwissDict[t]['beta_y'])
+		beta_y_ref = numpy.array(TwissDict[TurnList[-1]]['beta_y'])
+		beta_y = numpy.array(TwissDict[t]['beta_y'])
 		ax.plot(s[i2plot], 100*((beta_y - beta_y_ref)/beta_y_ref)[i2plot], color=colors[t])
 	ax.set_xlabel('s [m]')
 	ax.set_ylabel(r'$\beta_y$ [m]')
@@ -667,8 +667,8 @@ if not rank:
 
 	f, ax = matplotlib.pyplot.subplots()
 	for t in TurnList:
-		beta_x_ref = np.array(TwissDict[TurnList[-1]]['beta_x'])
-		beta_x = np.array(TwissDict[t]['beta_x'])
+		beta_x_ref = numpy.array(TwissDict[TurnList[-1]]['beta_x'])
+		beta_x = numpy.array(TwissDict[t]['beta_x'])
 		ax.plot(s[i2plot], 100*((beta_x - beta_x_ref)/beta_x_ref)[i2plot], color=colors[t])
 	ax.set_xlabel('s [m]')
 	ax.set_ylabel(r'$\beta_x$ [m]')
