@@ -1,0 +1,325 @@
+TITLE, 'Booster for PTC-ORBIT simulations';
+
+  QH   = 4.42;
+  QV   = 4.45;
+!  defl = .066;  !.066;  deflection angle of BSW chicane magnets ... normaly 0.066 rad
+
+/*
+    - geometry as extracted from Rufers Note SI/Note ME/70-4 .... even with negative
+      bending angles for the moment
+    - all magnets defined as individual elements with proper names
+    - symmetric injection chicane by Wim and Brennan
+    -> No need to split magnets and drifts for space charge evaluations??
+    -> Every magnet defined as element (in the sequence) ... a la Sascha to add soon
+      imperfections (not yet defined here)
+
+   To run and extract data for ORBIT on lxplus
+    - > /afs/cern.ch/group/si/slap/bin/madx_dev < PSB_All_QV455_160.madx
+*/
+
+! Data on geometry from Rufer's note
+   Lper  = 50.*Pi/16;              ! Length of one period
+   LiL1  = 2.654;                  ! Length of long straight sections
+   Lbend = 1.6177;                 ! Arc length in bending magnet
+!  rho   = Lbend/(Pi/16.);         ! bending radius not needed
+   Ltrip  = Lper - LiL1 - 2*Lbend; ! triplet length from bending exit to bending entrance
+
+! Main lattice magnets
+  kf = 0.75;
+  kd =-0.75;
+  Bend    : SBEND, L=Lbend, ANGLE=-TWOPI/32., E1=-TWOPI/64., E2=-TWOPI/64.;
+  QFO     : QUADRUPOLE, L=0.5027, K1: = kf + dkf;
+  QDE     : QUADRUPOLE, L=0.8811, K1: = kd + dkd;
+  BR.QDE3 : QUADRUPOLE, L=0.8811, K1: = kd + dkd + dkd3;
+  BR.QDE14: QUADRUPOLE, L=0.8811, K1: = kd + dkd + dkd14;
+
+! RF Cavity with 8 kV peak voltage ... installed in straight 10L1 ..i
+!     no dedicated h=2 cavity for the moment
+  BR.C02  : RFCAVITY, VOLT:= .008, HARMON:=1, L:=1.0, LAG:=0.0, no_cavity_totalpath;
+  BR.C04  : RFCAVITY, VOLT:= .006, HARMON:=2, L:=1.0, LAG:=0.5, no_cavity_totalpath;
+
+!  injection straight :
+!     - with four 66 mrad 0.370 m bends (as proposed now by Brennan, Wim & Co),
+!     - with beam offset (by momentum offset) -10mm towards the ring inside
+
+!  BR.BSW1 : QUADRUPOLE, L=0.370, K1=0.0, bend_fringe, k0:= kBSW;
+!  BR.BSW2 : QUADRUPOLE, L=0.370, K1=0.0, bend_fringe, k0:=-kBSW;
+!  BR.BSW3 : QUADRUPOLE, L=0.370, K1=0.0, bend_fringe, k0:=-kBSW;
+!  BR.BSW4 : QUADRUPOLE, L=0.370, K1=0.0, bend_fringe, k0:= kBSW;
+
+  BR.BSW1 : QUADRUPOLE, L=0.370, K1=0.0, kill_ent_fringe, bend_fringe, k0:= kBSW;
+  BR.BSW2 : QUADRUPOLE, L=0.370, K1=0.0, kill_exi_fringe, bend_fringe, k0:=-kBSW;
+  BR.BSW3 : QUADRUPOLE, L=0.370, K1=0.0, kill_ent_fringe, bend_fringe, k0:=-kBSW;
+  BR.BSW4 : QUADRUPOLE, L=0.370, K1=0.0, kill_exi_fringe, bend_fringe, k0:= kBSW;
+
+!  BR.BSW1 : QUADRUPOLE, L=0.370, K1:=0, kill_ent_fringe, kill_exi_fringe,  k0:= kBSW;
+!  BR.BSW2 : QUADRUPOLE, L=0.370, K1:=0, kill_ent_fringe, kill_exi_fringe,  k0:=-kBSW;
+!  BR.BSW3 : QUADRUPOLE, L=0.370, K1:=0, kill_ent_fringe, kill_exi_fringe,  k0:=-kBSW;
+!  BR.BSW4 : QUADRUPOLE, L=0.370, K1:=0, kill_ent_fringe, kill_exi_fringe,  k0:= kBSW;
+
+
+
+! Injection bumpers .... again as quadrupoles
+! ebenedet comment: The bump goes down in ~50 /mu s
+! ebenedet comment: They look similar to conventional magnets, i.e. different from extraction kicker (~100ns, ~2m long)
+  BR.KSW16L1 : QUADRUPOLE, L=0.444, K1=0.0, bend_fringe, k0:= dKSW16L1;
+  BR.KSW16L4 : QUADRUPOLE, L=0.444, K1=0.0, bend_fringe, k0:= dKSW16L4;
+  BR.KSW1L4  : QUADRUPOLE, L=0.444, K1=0.0, bend_fringe, k0:= dKSW1L4;
+  BR.KSW2L1  : QUADRUPOLE, L=0.444, K1=0.0, bend_fringe, k0:= dKSW2L1;
+
+! AC dipole for meghan
+  DES_ac : QUADRUPOLE , L := .565, K1=0.0,kill_ent_fringe, kill_exi_fringe,  k0:=kacdipole ;      ! Electrostatic horizontal/vertical stripline deflector
+
+kacdipole:=0;
+
+! QNO816L3 correctors
+
+kno:=0;
+
+QNO : MULTIPOLE, L=0, knl:={0,kno};
+
+! Other elements (i.e. apertures)
+
+BWSH      : MONITOR     , L := 0;         ! PSB Wire scanner horizontal
+BWSV      : MONITOR     , L := 0;         ! PSB Wire scanner vertical
+
+WBS       : RCOLLIMATOR , L := 0.04;       ! PSB Collimator, window beamscope
+
+!pick-up
+UES : monitor, L:=0;  !pickup
+
+! Define Periods (and parts of periods) as sequences
+  Per1ToFoil: SEQUENCE, L = LiL1/2, refer=centre;  ! with chicane
+    BR.BSW1,           AT = LiL1/2 - .991;
+    BR.BSW2,           AT = LiL1/2 - .295;
+  ENDSEQUENCE;
+
+  FoilToPer2: SEQUENCE, L = Lper - LiL1/2, refer=centre;
+    BR.BSW3,           AT = .295;
+    BR.BSW4,           AT = .991;
+    BR.BHZ11:   Bend,  AT = LiL1/2 + Lbend/2;
+    BR.QFO11:   QFO,   AT = LiL1/2 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE1:    QDE,   AT = LiL1/2 + Lbend + Ltrip/2.;
+    BR.KSW1L4,         AT = LiL1/2 + Lbend + Ltrip/2. + 0.768; ! estimate from PSB handbook
+    BR.QFO12:   QFO,   AT = LiL1/2 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ12:   BEND,  AT = Lper - LiL1/2 - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per2: SEQUENCE, L = Lper, refer=centre;
+!    BR1.BWS.2L1.V_ROT   : BWSV         , AT = .918;
+!    BR1.BWS.2L1.H_ROT   : BWSH         , AT = 1.016;
+    BR.KSW2L1,         AT = 1.680;                             ! estimate from PSB handbook
+    BR.BHZ21:   Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO21:   QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+  UES2L3          : UES          , AT = 5.467802     ;      ! pick-up
+    BR.QDE2:    QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO22:   QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ22:   BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per3: SEQUENCE, L = Lper, refer=centre;
+  BR1.DES3L1          : DES_ac  , AT = .8065;              ! AD dipole for Meghan
+    BR.BHZ31:   Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO31:   QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE3,           AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO32:   QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ32:   BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per4: SEQUENCE, L = Lper, refer=centre;
+    BR.BHZ41:   Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO41:   QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE4:    QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO42:   QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ42:   BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per5: SEQUENCE, L = Lper, refer=centre;
+    BR.BHZ51:   Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO51:   QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE5:    QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO52:   QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ52:   BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per6: SEQUENCE, L = Lper, refer=centre;
+    BR.BHZ61:   Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO61:   QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE6:    QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO62:   QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ62:   BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per7: SEQUENCE, L = Lper, refer=centre;
+    BR.BHZ71:   Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO71:   QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE7:    QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO72:   QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ72:   BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per8: SEQUENCE, L = Lper, refer=centre;
+    BR.BHZ81:   Bend,  AT = LiL1 + Lbend/2;
+    BR2.WBS8L2: WBS,   AT=LiL1 + Lbend/2+1.0106915;
+    BR.QFO81:   QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QNO8L3: QNO, AT = 5.467821;
+    BR.QDE8:    QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO82:   QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ82:   BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per9: SEQUENCE, L = Lper, refer=centre;
+    BR.BHZ91:   Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO91:   QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE9:    QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO92:   QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ92:   BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per10: SEQUENCE, L = Lper, refer=centre;
+    BR.C02,            AT = LiL1/2;
+    BR.BHZ101:  Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO101:  QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE10:   QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO102:  QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ102:  BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per11: SEQUENCE, L = Lper, refer=centre;
+    BR.BHZ111:  Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO111:  QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE11:   QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO112:  QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ112:  BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per12: SEQUENCE, L = Lper, refer=centre;
+    BR.BHZ121:  Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO121:  QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE12:   QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO122:  QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ122:  BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per13: SEQUENCE, L = Lper, refer=centre;
+!   BR.C04,            AT = LiL1/2;
+    BR.BHZ131:  Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO131:  QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE13:   QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO132:  QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ132:  BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per14: SEQUENCE, L = Lper, refer=centre;
+    BR.BHZ141:  Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO141:  QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE14,          AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO142:  QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ142:  BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per15: SEQUENCE, L = Lper, refer=centre;
+    BR.BHZ151:  Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO151:  QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QDE15:   QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.QFO152:  QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ152:  BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+  Per16: SEQUENCE, L = Lper, refer=centre;
+    BR.KSW16L1,        AT = 1.15;    ! rough estimate ... to be checked with Wim, Jean-Michel ..
+    BR.BHZ161:  Bend,  AT = LiL1 + Lbend/2;
+    BR.QFO161:  QFO,   AT = LiL1 + Lbend + Ltrip/2. - 1.345;
+    BR.QNO16L3: QNO, AT = 5.467821;
+    BR.QDE16:   QDE,   AT = LiL1 + Lbend + Ltrip/2.;
+    BR.KSW16L4,        AT = LiL1 + Lbend + Ltrip/2. + 0.768; ! estimate from PSB handbook
+    BR.QFO162:  QFO,   AT = LiL1 + Lbend + Ltrip/2. + 1.345;
+    BR.BHZ162:  BEND,  AT = Lper - Lbend/2.;
+  ENDSEQUENCE;
+
+! Aperture file
+!call file = 'psb_2012.dbx';
+
+
+! Put periods together to form a a Booster ring
+  PSBRing: SEQUENCE, L = 16*Lper, refer=entry;  ! no perturbation BSW modeled as quads with L=0
+    FoilToPer2,  AT =  0;
+    Per2,        AT =  1*Lper - LiL1/2;
+    Per3,        AT =  2*Lper - LiL1/2;
+    Per4,        AT =  3*Lper - LiL1/2;
+    Per5,        AT =  4*Lper - LiL1/2;
+    Per6,        AT =  5*Lper - LiL1/2;
+    Per7,        AT =  6*Lper - LiL1/2;
+    Per8,        AT =  7*Lper - LiL1/2;
+    Per9,        AT =  8*Lper - LiL1/2;
+    Per10,       AT =  9*Lper - LiL1/2;
+    Per11,       AT = 10*Lper - LiL1/2;
+    Per12,       AT = 11*Lper - LiL1/2;
+    Per13,       AT = 12*Lper - LiL1/2;
+    Per14,       AT = 13*Lper - LiL1/2;
+    Per15,       AT = 14*Lper - LiL1/2;
+    Per16,       AT = 15*Lper - LiL1/2;
+    Per1ToFoil,  AT = 16*Lper - LiL1/2;
+  ENDSEQUENCE;
+
+! Define beam at injection energy 160 MeV
+!  BEAM, PARTICLE=Prot, MASS=0.93827, CHARGE=1., ENERGY=0.93827 + 0.160;
+! Define beam at injection energy 50 MeV
+    BEAM, PARTICLE=Prot, MASS=0.93827, CHARGE=1., ENERGY=0.93827 + 0.050, SIGE=0.00021698417063281363, SIGT=23.537666082318182;
+
+!<============================== Machine without perturbation ===================================>
+! Use PTC interface to match lattice without perturbation (kf and kd to working point)
+  kBSW = 0.;  ! BSW 'strength' must be zero here
+
+  USE, PERIOD = PSBRing;
+  MATCH, SEQUENCE = PSBRing;;
+  VARY, NAME = kf, STEP = .1;
+  VARY, NAME = kd, STEP = .1;
+  GLOBAL, Q1 = QH;
+  GLOBAL, Q2 = QV;
+  LMDIF, TOLERANCE = 1.0E-15;
+  ENDMATCH;
+  SELECT, FLAG=TWISS, COLUMN=NAME, KEYWORD, L, S, BETX, BETY, DX, DY;
+  TWISS, FILE='PSB.tfs';
+
+
+
+  MATCH, USE_MACRO;
+    VARY, NAME = kf, STEP = .1;
+    VARY, NAME = kd, STEP = .1;
+    ma1: macro =
+     {
+        USE, PERIOD = PSBRing;   ! period without special equipment
+        ptc_create_universe;
+           ptc_create_layout, model=2, method=2, nst=5,exact=true;
+           ptc_setswitch, debuglevel=0, nocavity=false, fringe=true,
+                 exact_mis=true, time=true, totalpath=true;
+           ptc_script, file="thinX.PTC";
+           PTC_TWISS,  table=twiss, closed_orbit, icase=5, no=2, rmatrix;
+       ptc_end;
+     }
+    CONSTRAINT, EXPR=Table(twiss, PSBRing$end, mu1) = QH;
+    CONSTRAINT, EXPR=Table(twiss, PSBRing$end, mu2) = QV;
+    LMDIF, TOLERANCE = 1.0E-15;
+  ENDMATCH;
+
+
+
+! Output lattice functions for machine without any perturbation
+  USE, PERIOD = PSBRing;
+  SELECT, FLAG=TWISS, CLEAR;
+  SELECT, FLAG=TWISS, COLUMN=NAME, L, S, BETA11, ALFA11, MU1, BETA22, ALFA22, MU2, DISP1, DX, DY, x, px;
+  ptc_create_universe;
+     ptc_create_layout, model=2, method=2, nst=5,exact=true, resplit;
+     ptc_setswitch, debuglevel=0, nocavity=false, fringe=true,
+           exact_mis=true, time=true, totalpath=true;
+     ptc_script, file="thinX.PTC";
+     ptc_script, file="thinP.PTC";
+     PTC_TWISS,  table=twiss, closed_orbit, icase=5, no=2, rmatrix;
+  ptc_end;
+  WRITE, TABLE=twiss, FILE="NoPertPTC.Out";
+
+  VALUE, kf, kd;
+
+  PLOT, HAXIS=S, VAXIS1=BETX,BETY,DISP1, COLOUR=100, VMIN=-10,VMAX=20;
+stop;

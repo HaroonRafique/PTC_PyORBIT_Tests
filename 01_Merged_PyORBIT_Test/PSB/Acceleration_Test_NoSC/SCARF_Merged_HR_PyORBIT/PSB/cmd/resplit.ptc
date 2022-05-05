@@ -1,0 +1,25 @@
+! Select the PTC layout
+SELECTLAYOUT
+1
+! Set a limit for the maximum number of integration nodes
+LIMIT FOR CUTTING
+10000 10000
+!4 18
+! maximum distance between ORBIT nodes
+LMAX
+1.0d0
+! 0.5
+! accuracy of lmax
+FUZZYLMAX
+0.1
+! 1.1
+! 2 = cut all elements, 1 = only drifts
+CUTTING ALGORITHM
+2
+! maximum integrated quad strength, 1m quad of k=2.2 would be split
+! into 220 parts so that the integrated length of one part < 0.01 m
+thin lens =1
+THINLENS
+0.1
+! 0.01
+return

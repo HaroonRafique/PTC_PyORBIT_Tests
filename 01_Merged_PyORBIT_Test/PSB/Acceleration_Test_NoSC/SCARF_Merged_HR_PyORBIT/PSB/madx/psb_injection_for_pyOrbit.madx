@@ -1,0 +1,227 @@
+
+/******************************************************************************************
+ *
+ * MAD-X File for PS Booster optics injection calculations
+ *
+ * Working point for injection : QX = 4.28 and QY = 4.45.
+ *
+ * This file is for protons at 0.57 GeV/c (160 MeV)
+ *
+ * Execute with:  
+ *      >/afs/cern.ch/eng/sl/MAD-X/pro/releases/5.02.00/madx-linux64 < psb_injection.madx
+ *
+ * for compatible PTC Version with PTC-pyORBIT in 
+ *
+ * /afs/cern.ch/user/p/pyorbit/public/PyOrbit_env/py-orbit/bin/pyORBIT
+ *
+ ******************************************************************************************/
+
+ title, 'PSB';
+
+ option, echo;
+ option, RBARC=FALSE;
+ setplot, post=2, font=4;
+
+/******************************************************************************************
+ * BOOSTER
+ ******************************************************************************************/
+ call, file = '../elements/psb.ele';
+ call, file = '../sequence/psb.seq';
+ call, file = '../aperture/psb.dbx';
+ call, file = '../strength/psb_orbit.str' ;
+ ! call, file = '../strength/psb_injection.str';
+ call, file = '../cmd/psb2pyOrbit_macros.cmd';
+ call, file = '../elements/sbends.ele'; 
+ call, file = '../cmd/set_BSW.cmd';
+ call, file = '../cmd/beta_beating.cmd';
+
+
+
+!save, sequence=psb1, file=psb1.save;
+
+/******************************************************************************************
+ * beam, use
+ ******************************************************************************************/
+
+call, file = '../beam/psb_injection.beamx';
+
+use, sequence=psb1;
+
+set, format = "18.10e";
+
+/******************************************************************************************
+ * Match for new working point
+ ******************************************************************************************/
+
+MATCH,sequence=psb1;
+ vary, NAME=kKF, step = 0.0001;
+ vary, NAME=kKD, step = 0.0001;
+ constraint, range=#E, MUX=4.28, MUY=4.45;
+ lmdif, calls = 10000, tolerance = 1.0E-21;
+ENDMATCH;
+
+! Print results on file: match_injection.prt
+assign, echo="../output/match_injection.prt";
+print, text="match_injection";
+value,  kKF;
+value,  kKD;
+assign, echo=terminal;
+
+/******************************************************************************************
+ * TWISS
+ ******************************************************************************************/
+
+PSHIFT=0;
+
+/************************************************************
+ * MAD uses pt as the 5th variable NOT delta-p.
+ * The result is that all derivatives are with repect to pt.
+ * This is the reason for the non-standard dispersion values
+ * for non-relativistic machines, like the PSB
+ * Ax and Ay are the apertures in number of sigmas
+ ************************************************************/
+ beta=sqrt(1-1/beam->gamma^2);
+ disp:=beta*table(twiss,dx); ! Delta_x=disp*Delta_p/p;
+!hx:=table(twiss,aper_1);
+ hx := (table(twiss,aper_1)+table(twiss,aper_3)-abs(table(twiss,aper_1)-table(twiss,aper_3)))/2; ! MIN( aper_1, aper_3)
+ hy := (table(twiss,aper_2)+table(twiss,aper_4)-abs(table(twiss,aper_2)-table(twiss,aper_4)))/2; ! MIN( aper_2, aper_4)
+ sx := SQRT(table(twiss,betx)*beam->ex);
+ sy := SQRT(table(twiss,bety)*beam->ey);
+ option, -warn;
+ Ax := SQRT((hx^2-(3*disp*beam->sige)^2)/(table(twiss,betx)*beam->ex));
+ Ay := SQRT(hy^2/(table(twiss,bety)*beam->ey)); ! There is no dispersion in vertical plane
+ option, warn;
+
+select, flag=twiss, clear;
+select, flag=twiss, column=name, s,x,alfx,alfy,betx,bety,disp,apertype,aper_1,aper_2,aper_3,aper_4,hx,hy,sx,sy,Ax,Ay;
+
+twiss , centre
+      , DELTAP = PSHIFT
+      , table=TWISS
+      , file='../output/output_injection.outx';
+
+value, beam->ex, beam->ey,beam->sige, beam->sigt;
+value,table(TWISS,PSB1$START,betx);
+
+
+/******************************************************************************************
+ * START SEQUENCE AT FOIL, DEFINE PSB1-> PSB AND SAVE
+ *
+ *	Note: generally save + reload sequence to remove auto-generated marker at start/end
+ *	of period.
+ *	Warning: the required MAD-X version(/afs/cern.ch/eng/sl/MAD-X/pro/releases/5.02.00/madx-linux64)     
+ *		 produces an error if
+ *		 	1)  call, file='./input/psb.seq';
+ *			2)  use, sequence = psb1;
+ *			3)  psb: sequence, l = 157.08, refer = entry;
+ *			4)    psb1      , at = 0.0;
+ *			5)  endsequence;
+ *			6)  use, sequence=psb;
+ *		 --> negative drift.
+ *		 Works with newer MAD-X version, can be avoided here by saving psb + call
+ *		 before use (6)
+ ******************************************************************************************/
+
+seqedit, sequence = psb1;
+  flatten;
+  cycle, start =  BI1.TSTR1L1;
+  flatten;
+endedit;
+use, sequence = psb1;
+
+psb: sequence, l = 157.08, refer = entry;
+  psb1      , at = 0.0;
+endsequence;
+use, sequence=psb;
+
+option, -warn, -echo;
+save, sequence = psb, file = '../sequence/psb_new_modified.seq';
+call, file = '../sequence/psb_new_modified.seq';
+use, sequence=psb;
+option, warn, echo;
+
+
+/******************************************************************************************
+ * EDIT SEQUENCE TO FULFILL PTC REQUIREMENTS (see macros for more information)
+ * 
+ *  -) define cavity with no_cavity_totalpath
+ *	-) remove_elements(option)
+ *	   - 1  :  remove all markers, instruments and monitors, extraction bumpers, reinstall foil
+ *	   - 2  :  remove only defined classes (e.g. keep wire scanners)
+ * 	   - 3  :  remove markers, 
+ * 	   - 4  :  remove markers, instruments, monitors, extraction bumpers, reinstall foil,
+ *	      	   remove scrapers of dipoles and reduce dipole aperture
+ *  -) install fixed mask (large aperture)
+ *  -) remove mask with small aperture (optional)
+ ******************************************************************************************/
+
+call, file = '../elements/psb_injectionhw.ele';
+exec, remove_elements(4);
+exec, edit_cavities(psb);
+exec, install_fixed_mask();
+! exec, remove_small_mask();
+use, sequence=psb;
+twiss;
+
+option, -warn, -echo;
+save, sequence = psb, file = '../sequence/psb_new_modified.seq';
+call, file = '../sequence/psb_new_modified.seq';
+use, sequence=psb;
+option, warn, echo;
+
+/******************************************************************************************
+ * Match for desired working point
+ ******************************************************************************************/
+
+QH = 4.35;
+QV = 4.40;
+
+MATCH, Sequence=PSB;
+	VARY, NAME = kkf, STEP = 1e-3;
+	VARY, NAME = kkd, STEP = 1e-3;
+	GLOBAL, Q1 = QH;
+	GLOBAL, Q2 = QV;
+	JACOBIAN,CALLS=1000,TOLERANCE=1.0E-18,STRATEGY=3; !,COOL=real,BALANCE=real, random=real;
+ENDMATCH; 
+
+exec, ptc_twiss_macro;
+write, table=ptc_twiss, file='ptc_twiss.txt';
+
+SELECT, FLAG=PTC_TWISS, COLUMN=NAME, KEYWORD, L, S, BETX, BETY, ALFX, ALFY, Dispx, X, Y;
+MATCH, USE_MACRO;
+	VARY, NAME = kkf, STEP = 1e-6;
+	VARY, NAME = kkd, STEP = 1e-6;
+	USE_MACRO, name=ptc_twiss_macro;
+	CONSTRAINT, EXPR=Table(ptc_twiss, PSB$END, mu1) = QH;
+	CONSTRAINT, EXPR=Table(ptc_twiss, PSB$END, mu2) = QV;
+	LMDIF, TOLERANCE = 1.0E-18;
+ENDMATCH;  
+
+
+/******************************************************************************************
+ * ASSIGN ERRORS TO LATTICE
+ ******************************************************************************************/
+/***
+use, sequence=PSB;
+select, flag=error, clear;
+select, flag=error, pattern=BR.BHZ121;
+efcomp, order:=0, DKN:={0, 1e-2};
+exec, ptc_twiss_macro;
+PLOT, table=ptc_twiss, HAXIS=S, VAXIS1=BETX,BETY, VAXIS2=X, COLOUR=100, 
+	VMIN=0,-0.08, VMAX=25,0.02, file='../output/psb_injection', interpolate;
+***/
+
+/******************************************************************************************
+ * CREATE PTC FLAT FILE: 
+ *
+ * "First we use the PTC script resplit.ptc - this is used to split
+ * defined elements (dipole, quadrupole, sextupole families etc) in
+ * order to introduce space charge nodes inside their length. See the
+ * file for further information. Next the flat file is generated and 
+ * saved."
+ ******************************************************************************************/
+
+if (use_BSW_alignment==1){exec, assign_BSW_alignment;};
+exec, generate_flatfile;
+
+system, "rm Maxwellian_bend_for_ptc.txt";

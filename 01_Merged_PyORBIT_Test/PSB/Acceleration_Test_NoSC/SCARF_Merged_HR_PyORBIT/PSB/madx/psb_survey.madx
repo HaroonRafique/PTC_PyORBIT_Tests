@@ -1,0 +1,194 @@
+/******************************************************************************************
+*
+* MAD-X File for PS Booster survey file generation
+*
+* Generated from psb_orbit.madx file      (IE) 15.05.2017
+*
+* Uses the output files from psb_orbit.madx file
+*
+* PSB Extraction working point:
+* New working point: QX = 4.172 and QY = 4.23.  21 Dec 2006 O.Berrig
+*
+* This file is for protons at 0.348 GeV/c at time c = 301
+*
+* Execute with:  >madx < psb_survey.madx
+*
+******************************************************************************************/
+
+ title, 'BOOSTER survey';
+
+ option, RBARC=FALSE;
+
+/******************************************************************************************
+ * BOOSTER
+ ******************************************************************************************/
+ option, -echo;
+ call, file = '../elements/psb.ele';
+ call, file = '../sequence/psb.seq';
+ call, file = '../aperture/psb.dbx';
+ call, file = '../strength/psb_orbit.str';
+ option, echo, info ;
+
+/******************************************************************************************
+ * beam, use
+ ******************************************************************************************/
+call, file = '../beam/psb_orbit.beamx';
+use, sequence=psb3; ! Ring 3
+
+set,  format="20.10f";
+
+/******************************************************************************************
+ * MATCHING initial coordinates for survey
+ ******************************************************************************************/
+/*
+ ccenter(filename, element): macro = {
+
+    option, echo, info, -warn;
+    readmytable,file=filename,table=mysurvey;
+    n_elem  =  table(mysurvey, tablelength);
+    create,table=mysurveyrow,column=_NAME,Z,X,Y,row;
+    row=0;
+    while ( row < n_elem ) {
+          row = row+1;
+          setvars, table=mysurvey, row=row;
+          fill,table=mysurveyrow;
+    }
+ !   write,table=mysurveyrow,file="file_name_row";
+
+    row = table(mysurveyrow,  element, row);
+    if ( row < 1 ) { print, text="Error: row is less than 1. Stop"; stop; }
+
+    SETVARS,TABLE=mysurvey,ROW=row-1; pos0.x = Z; pos0.y = X;
+    SETVARS,TABLE=mysurvey,ROW=row; pos1.x = Z; pos1.y = X;
+
+    x.center = (pos0.x+pos1.x)/2;
+    y.center = (pos0.y+pos1.y)/2;
+
+    delete,table=mysurvey;
+    delete,table=mysurveyrow;
+
+    option, echo, info, warn;
+
+ };
+
+ msurveymacro(z0, x0, y0, theta0) : macro={
+        select, flag=survey, clear;
+        select, flag=survey, column=name, s, l, z, x, y;
+        survey, z0=z0, x0=x0, y0=y0, theta0=theta0, file="psb_0.survey";
+
+        readmytable,file="psb_0.survey",table=mysurvey;
+        n_elem  =  table(mysurvey, tablelength);
+        create,table=mysurveyrow,column=_NAME,Z,X,Y,row;
+        row=0;
+        while ( row < n_elem ) {
+              row = row+1;
+              setvars, table=mysurvey, row=row;
+              fill,table=mysurveyrow;
+        }
+        write,table=mysurveyrow,file="psb_0_row.survey";
+
+        exec, ccenter("psb_0_row.survey", BR.QFO11 ); QFO11.x = x.center; QFO11.y = y.center; value, QFO11.x, QFO11.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO21 ); QFO21.x = x.center; QFO21.y = y.center; value, QFO21.x, QFO21.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO31 ); QFO31.x = x.center; QFO31.y = y.center; value, QFO31.x, QFO31.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO41 ); QFO41.x = x.center; QFO41.y = y.center; value, QFO41.x, QFO41.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO51 ); QFO51.x = x.center; QFO51.y = y.center; value, QFO51.x, QFO51.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO61 ); QFO61.x = x.center; QFO61.y = y.center; value, QFO61.x, QFO61.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO71 ); QFO71.x = x.center; QFO71.y = y.center; value, QFO71.x, QFO71.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO81 ); QFO81.x = x.center; QFO81.y = y.center; value, QFO81.x, QFO81.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO91 ); QFO91.x = x.center; QFO91.y = y.center; value, QFO91.x, QFO91.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO101 ); QFO101.x = x.center; QFO101.y = y.center; value, QFO101.x, QFO101.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO111 ); QFO111.x = x.center; QFO111.y = y.center; value, QFO111.x, QFO111.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO121 ); QFO121.x = x.center; QFO121.y = y.center; value, QFO121.x, QFO121.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO131 ); QFO131.x = x.center; QFO131.y = y.center; value, QFO131.x, QFO131.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO141 ); QFO141.x = x.center; QFO141.y = y.center; value, QFO141.x, QFO141.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO151 ); QFO151.x = x.center; QFO151.y = y.center; value, QFO151.x, QFO151.y  ;
+        exec, ccenter("psb_0_row.survey", BR.QFO161 ); QFO161.x = x.center; QFO161.y = y.center; value, QFO161.x, QFO161.y  ;
+
+        exec, ccenter("psb_0_row.survey", BR.QFO12 ); QFO12.x = x.center; QFO12.y = y.center; value, QFO12.x, QFO12.y  ;
+
+        value, z0,x0,y0,theta0;
+
+        print, text="------------------------------------------------";
+ };
+
+ theta0 =   -4.3241035871 ;
+ z0     = 1880.50347 ;
+ x0     = 2108.4000954267 ;
+ y0     = 2433.6600000000 ;
+
+ print, text="Initial values used:", value=theta0,z0,x0,y0;
+ exec, msurveymacro(z0, x0, y0, theta0);
+
+ match,use_macro;
+        vary, name=theta0 , step = 0.0000000001, LOWER= -10.0 ,UPPER=  10.0;
+        vary, name=x0     , step = 0.0000000001, LOWER=1600.0 ,UPPER=2200.0;
+        vary, name=z0     , step = 0.0000000001, LOWER=1600.0 ,UPPER=2200.0;
+
+        use_macro,name=msurveymacro(z0,x0,y0,theta0);
+
+!       The matching constraints for the quadrupoles
+        constraint, expr=QFO11.x  = 1878.402640; constraint, expr=QFO11.y  = 2112.799810;
+        constraint, expr=QFO21.x  = 1871.932005; constraint, expr=QFO21.y  = 2120.073825;
+        constraint, expr=QFO31.x  = 1863.170265; constraint, expr=QFO31.y  = 2124.317930;
+        constraint, expr=QFO41.x  = 1853.451325; constraint, expr=QFO41.y  = 2124.886000;
+        constraint, expr=QFO51.x  = 1844.254805; constraint, expr=QFO51.y  = 2121.691555;
+        constraint, expr=QFO61.x  = 1836.980795; constraint, expr=QFO61.y  = 2115.220915;
+        constraint, expr=QFO71.x  = 1832.736685; constraint, expr=QFO71.y  = 2106.459180;
+        constraint, expr=QFO81.x  = 1832.168615; constraint, expr=QFO81.y  = 2096.740235;
+        constraint, expr=QFO91.x  = 1835.363065; constraint, expr=QFO91.y  = 2087.543720;
+        constraint, expr=QFO101.x = 1841.833705; constraint, expr=QFO101.y = 2080.269705;
+        constraint, expr=QFO111.x = 1850.595440; constraint, expr=QFO111.y = 2076.025600;
+        constraint, expr=QFO121.x = 1860.314380; constraint, expr=QFO121.y = 2075.457525;
+        constraint, expr=QFO131.x = 1869.510900; constraint, expr=QFO131.y = 2078.651975;
+        constraint, expr=QFO141.x = 1876.784915; constraint, expr=QFO141.y = 2085.122615;
+        constraint, expr=QFO151.x = 1881.029020; constraint, expr=QFO151.y = 2093.884350;
+        constraint, expr=QFO161.x = 1881.597090; constraint, expr=QFO161.y = 2103.603290;
+
+        constraint, expr=QFO12.x  = 1876.917490; constraint, expr=QFO12.y  = 2115.043870;
+
+        jacobian,calls = 500, tolerance = 1.0E-25;
+        lmdif,   calls = 500, tolerance = 1.0E-25;
+!       simplex, calls = 500, tolerance = 1.0E-25;
+ endmatch;
+
+ value, z0,x0,y0,theta0;
+*/
+
+/******************************************************************************************
+ * Survey - start from period 1
+ ******************************************************************************************/
+
+ theta0 =   -4.3241035871 ;
+ z0     = 1880.50347 ;
+ x0     = 2108.4000954267 ;
+ y0     = 2433.6600000000 ;
+ select, flag=survey, clear;
+ select, flag=survey, column=name, s, l, z, x, y, slot_id, assembly_id;
+ survey, z0=z, x0=x0, y0=y0, theta0=theta0, file="../survey/psbn22.survey";
+
+
+ "BR","360","BRSTART.0.E","1880.503650","2108.400175","2433.660000","0.000000","-","0.000000000","0.000000","375.2809750","0.000000000","0.000000000","20-MAR-2019","-","787437","-","-"
+
+  ! plot, title='PSB.survey', table=survey, vaxis=Y,haxis=Z, SPLINE=FALSE, COLOUR=100, RANGE=#S/#E, file = "../survey/psbn";
+
+ psb_survey : macro={
+
+     use, sequence=psb3;
+     X0 = -1905.00325; Y0 = 2431.16062; Z0 = 1946.16673; THETA0 = -5.411594399884267;
+     X0 = -1880.50347; Y0 = 2433.66; Z0 = 2108.4000954267; THETA0 = -5.894899770460074 ;
+     ! X0 = -1880.4199776634; Y0 = 2433.66; Z0 = 2108.6380265657; THETA0 = -4.3140317590 ;  ! values obtained by the matching above
+
+     PHI0   = 0.0;
+     PSI0   = 0.0;
+     title, "PSB - LS2 CONFIGURATION";
+     set,  format="-18s";
+     set,  format="15.9f";
+     select, flag=survey,clear;
+     select, flag=survey, column=NAME,S,L,ANGLE,X,Y,Z,THETA,PHI,PSI,GLOBALTILT,SLOT_ID, ASSEMBLY_ID;
+     survey, x0=X0, y0=Y0, z0=Z0, theta0=THETA0, phi0=PHI0, psi0=PSI0, file="../survey/psb_input_for_GEODE.sur";
+     ! save,sequence=L4T,file="../test/psb_sav.seq",bare,noexpr;
+ }
+
+ exec, psb_survey;
+
+STOP;
