@@ -1,7 +1,7 @@
 # script to setup the PyOrbit environment 
 # execute like: . setup_environment.sh
 
-pyOrbit_dir=/apps20/contrib/ptc-pyorbit/PTC-PyORBIT/Merged_HR_PyORBIT/py-orbit
+pyOrbit_dir=/apps20/contrib/ptc-pyorbit/PTC-PyORBIT/Merged_HR_PyORBIT_2/py-orbit
 
 source ${pyOrbit_dir}/customEnvironment.sh
 echo "customEnvironment done"
