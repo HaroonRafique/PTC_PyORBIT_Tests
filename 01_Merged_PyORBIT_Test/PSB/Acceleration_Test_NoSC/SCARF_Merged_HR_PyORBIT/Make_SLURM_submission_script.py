@@ -34,7 +34,7 @@ n_tasks_tot = 80
 # ~ scan_tune = os.getcwd().split('/')[-1][-2:]
 
 # ~ jobname = str(space_charge_flag) + '_' + str(transverse_plane) + '_' + str(scan_tune)
-jobname = 'PS_Acc'
+jobname = 'PSB_Acc'
 
 path_to_simulation = os.path.dirname(os.path.realpath(__file__)) # This directory
 
