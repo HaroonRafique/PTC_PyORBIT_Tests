@@ -1,0 +1,7 @@
+/**********************************************************************************
+*                             Tunes for PTC-PyORBIT simulation
+***********************************************************************************/
+tune_x = 0.21;
+tune_y = 0.24;
+lattice_start = 1;     !Choice of wire-scanner for lattice start position
+Injection_Bump = 1;     !Execute close of injection bump
