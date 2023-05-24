@@ -20,3 +20,5 @@ echo "full PyOrbit path:  ${ORBIT_ROOT_fullpath}"
 echo
 . ${ORBIT_ROOT}/../CheckGitStatus.sh ${ORBIT_ROOT_fullpath}
 
+# Test: remove creation of bytecode to avoid race condition bug
+export PYTHONDONTWRITEBYTECODE=1
