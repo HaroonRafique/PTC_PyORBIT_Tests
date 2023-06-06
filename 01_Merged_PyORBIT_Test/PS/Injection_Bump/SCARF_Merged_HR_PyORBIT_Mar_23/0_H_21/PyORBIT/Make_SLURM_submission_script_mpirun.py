@@ -25,7 +25,7 @@ mem_limits = False      # Specify memory limits, default 4GB
 queue = 'ibis' # isis exclusive 10x SCARF16 nodes 20 cores/Node
 
 # ~ n_nodes = 4 
-n_tasks_tot = 80
+n_tasks_tot = 20
 
 space_charge_flag = int(os.getcwd().split('/')[-2][0])
 print ('simulation_parameters: space charge = ', space_charge_flag)
@@ -36,7 +36,7 @@ scan_tune = os.getcwd().split('/')[-2][-2:]
 if space_charge_flag:
         n_tasks_tot = 120
 else:
-        n_tasks_tot = 80 
+        n_tasks_tot = 20 
         
 jobname = str(space_charge_flag) + '_' + str(transverse_plane) + '_' + str(scan_tune)
 
